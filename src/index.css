@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Define custom theme variables for Tailwind v4 */
+@theme {
+  --color-gold-400: #E6C667;
+  --color-gold-500: #D4AF37;
+  --color-gold-600: #AA820A;
+
+  --color-burgundy-800: #4A0E17;
+  --color-burgundy-900: #2B080D;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  background-color: #FAF6EE;
+  color: #2C221E;
+}
+
+.font-serif-title {
+  font-family: 'Cinzel Decorative', serif;
+}
+
+.font-script {
+  font-family: 'Great Vibes', cursive;
+}
