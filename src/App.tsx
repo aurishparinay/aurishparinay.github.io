@@ -235,7 +235,7 @@ export default function App() {
     <div className="min-h-screen floral-bg text-[#3d2b1f] overflow-x-hidden">
 
       {/* ── HEADER ── */}
-      <header className="sticky top-0 z-40 bg-[#faf7f2]/90 backdrop-blur-md border-b border-[#d0ddd0]">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[#faf7f2]/90 backdrop-blur-md border-b border-[#d0ddd0]">
         <div className="max-w-5xl mx-auto px-5 py-3 flex items-center justify-between">
           <a href="#hero" className="font-script text-2xl text-[#5a7e5a] tracking-wide">
             Aurish Parinay
@@ -251,8 +251,11 @@ export default function App() {
         </div>
       </header>
 
+      {/* Spacer for fixed header */}
+      <div className="h-13" />
+
       {/* ── HERO ── */}
-      <section id="hero" className="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-5 py-20 overflow-hidden">
+      <section id="hero" className="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-5 py-20 pt-16">
         <div className="absolute top-0 left-0 pointer-events-none"><CornerFloral position="tl" /></div>
         <div className="absolute top-0 right-0 pointer-events-none"><CornerFloral position="tr" /></div>
         <div className="absolute bottom-0 left-0 pointer-events-none"><CornerFloral position="bl" /></div>
@@ -267,8 +270,6 @@ export default function App() {
           >
             <img src="/GaneshaNew.png" alt="Ganesha" className="w-24 h-24 object-contain" />
           </div>
-
-          {/* Eyebrow — removed */}
 
           {/* Script title */}
           <h1
@@ -536,9 +537,6 @@ export default function App() {
                     className="w-full py-3 bg-[#5a7e5a] text-white text-xs uppercase tracking-widest font-medium rounded-xl shadow-sm hover:bg-[#4a6e4a] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
                     <Send className="w-3.5 h-3.5" /> Confirm RSVP
                   </button>
-                  <p className="text-center text-[10px] text-[#5d4a3a]/60 tracking-wide">
-                    Please respond by 15th November 2026
-                  </p>
                 </form>
               )}
             </div>
@@ -558,7 +556,7 @@ export default function App() {
           </div>
           <h3 className="font-script text-4xl text-[#e8b89a]">Aurish Parinay</h3>
           <p className="text-xs uppercase tracking-[0.2em] text-[#a8bfa8]">
-            Rishi &amp; Aulick · 3rd December 2026 · Surat
+            Aulick &amp; Rishi · 3rd December 2026 · Surat
           </p>
           <div className="w-10 h-px bg-[#5d4a3a] mx-auto" />
           <p className="text-xs text-[#f5efe6]/50 font-light">Made with love for our family &amp; friends</p>
