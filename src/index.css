@@ -1,28 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap');
+
 @import "tailwindcss";
 
-/* Define custom theme variables for Tailwind v4 */
 @theme {
-  --color-gold-400: #E6C667;
-  --color-gold-500: #D4AF37;
-  --color-gold-600: #AA820A;
+  --color-blush-50:  #fdf6f0;
+  --color-blush-100: #faeee3;
+  --color-blush-200: #f3d5c0;
+  --color-blush-300: #e8b89a;
+  --color-rose-400:  #d4836a;
+  --color-rose-500:  #b85c48;
 
-  --color-burgundy-800: #4A0E17;
-  --color-burgundy-900: #2B080D;
+  --color-sage-100:  #eef3ee;
+  --color-sage-200:  #d0ddd0;
+  --color-sage-300:  #a8bfa8;
+  --color-sage-400:  #7a9e7a;
+  --color-sage-500:  #5a7e5a;
+
+  --color-ivory:     #faf7f2;
+  --color-warm-100:  #f5efe6;
+  --color-warm-200:  #e8ddd0;
+  --color-warm-800:  #3d2b1f;
+  --color-warm-900:  #261a10;
+
+  --color-gold-400:  #c9a96e;
+  --color-gold-500:  #b8924a;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap');
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  font-family: 'Cormorant Garamond', serif;
-  background-color: #FAF6EE;
-  color: #2C221E;
-}
-
-.font-serif-title {
-  font-family: 'Cinzel Decorative', serif;
+  font-family: 'Jost', sans-serif;
+  background-color: #faf7f2;
+  color: #3d2b1f;
+  -webkit-font-smoothing: antialiased;
 }
 
 .font-script {
   font-family: 'Great Vibes', cursive;
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-serif-alt {
+  font-family: 'EB Garamond', serif;
+}
+
+/* Subtle floral SVG background pattern */
+.floral-bg {
+  background-color: #faf7f2;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d0ddd0' fill-opacity='0.25'%3E%3Cpath d='M40 0c0 22.09-17.91 40-40 40 22.09 0 40 17.91 40 40 0-22.09 17.91-40 40-40-22.09 0-40-17.91-40-40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: #d0ddd0;
+  color: #3d2b1f;
 }

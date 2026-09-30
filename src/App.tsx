@@ -1,739 +1,577 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Heart, Calendar, MapPin, Music, Pause, Play, Sparkles, Send, 
-  Clock, Check, X, Users, ChevronRight, Volume2, VolumeX, Mail, 
-  ExternalLink, Image as ImageIcon, Camera, Compass, Gift, Star
-} from 'lucide-react';
+import { Heart, Calendar, MapPin, Clock, Send, Check, Sparkles } from 'lucide-react';
 
-const EVENT_DETAILS = {
-  couple: {
-    groom: "Rishi",
-    bride: "Aulick",
-    tagline: "The Sacred Union of Two Souls",
-    date: "December 03, 2026",
-    isoDate: "2026-12-03T18:00:00+05:30",
-    venueCity: "Surat, India"
+// ─── Event Data ───────────────────────────────────────────────────────────────
+const EVENTS = [
+  {
+    id: 'mehandi',
+    name: 'Mehandi',
+    day: 'Tuesday, 1st December',
+    time: '6:30 PM',
+    venue: 'Green Fusion',
+    city: 'Surat',
+    mapUrl: 'https://maps.app.goo.gl/qYU4dNTZMJW1jK9NA',
+    accent: '#7a9e7a',
+    accentLight: '#eef3ee',
+    accentMid: '#a8bfa8',
+    image: '/MehandiNew.png',
   },
-  timeline: [
-    {
-      year: "2022",
-      title: "First Meeting",
-      subtitle: "A Chance Encounter",
-      desc: "Crossed paths at a serene coffee house in Indiranagar. A conversation over spices and stories that lasted until dusk.",
-      image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      year: "2024",
-      title: "The Proposal",
-      subtitle: "Under a Canopy of Stars",
-      desc: "An unforgettable twilight evening overlooking the hills of Nandi, sealed with an heirloom ring and endless promises.",
-      image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800"
-    },
-    {
-      year: "2026",
-      title: "The Parinay",
-      subtitle: "Eternal Togetherness",
-      desc: "We step into our new forever surrounded by sacred mantras, loved ones, and divine blessings.",
-      image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800"
-    }
-  ],
-  events: [
-    {
-      id: "haldi",
-      name: "Phoolon Ki Haldi & Mehendi",
-      date: "Friday, Dec 11, 2026",
-      time: "10:30 AM IST",
-      location: "The Tamarind Tree, Kanakapura Road",
-      address: "Avaani, Royal Palms, Bengaluru, Karnataka",
-      dressCode: "Sunlit Yellows, Floral Prints & Traditional Chic",
-      mapUrl: "https://maps.google.com/?q=The+Tamarind+Tree+Bengaluru",
-      icon: "✨",
-      desc: "An auspicious morning filled with fresh marigolds, turmeric paste rituals, live henna artists, and folk music."
-    },
-    {
-      id: "sangeet",
-      name: "Royal Sangeet & Cocktail",
-      date: "Friday, Dec 11, 2026",
-      time: "07:00 PM IST",
-      location: "Grand Ballroom, The Leela Palace",
-      address: "23, HAL Old Airport Rd, Kodihalli, Bengaluru",
-      dressCode: "Glitz & Glamour, Indo-Western Tuxedos & Heavy Lehengas",
-      mapUrl: "https://maps.google.com/?q=The+Leela+Palace+Bengaluru",
-      icon: "🎶",
-      desc: "An evening of dazzling dance performances, lyrical melodies, signature royal cocktails, and celebratory toasts."
-    },
-    {
-      id: "wedding",
-      name: "The Sacred Parinay (Muhurtham)",
-      date: "Saturday, Dec 12, 2026",
-      time: "06:00 PM IST",
-      location: "The Glass House, Taj West End",
-      address: "25, Race Course Rd, Sampangi Rama Nagar, Bengaluru",
-      dressCode: "Royal Ethnic / Heritage Silks & Kanjeevarams",
-      mapUrl: "https://maps.google.com/?q=Taj+West+End+Bengaluru",
-      icon: "💍",
-      desc: "The holy Vedic wedding ceremony, exchange of varmalas, and saptapadi around the sacred fire."
-    },
-    {
-      id: "reception",
-      name: "Grand Reception",
-      date: "Sunday, Dec 13, 2026",
-      time: "07:30 PM IST",
-      location: "JW Marriott Hotel",
-      address: "24/1, Vittal Mallya Rd, Ashok Nagar, Bengaluru",
-      dressCode: "Black Tie & Elegant Evening Gowns / Bandhgala",
-      mapUrl: "https://maps.google.com/?q=JW+Marriott+Bengaluru",
-      icon: "🥂",
-      desc: "A lavish dinner feast celebrating our union with global culinary experiences and live orchestral melodies."
-    }
-  ],
-  gallery: [
-    {
-      url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000",
-      caption: "Moments of Joy",
-      category: "engagement"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=1000",
-      caption: "Royal Grace",
-      category: "rituals"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=1000",
-      caption: "Golden Sunset Walks",
-      category: "prewedding"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&q=80&w=1000",
-      caption: "Eternal Promises",
-      category: "engagement"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=1000",
-      caption: "Laughter & Warmth",
-      category: "prewedding"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?auto=format&fit=crop&q=80&w=1000",
-      caption: "Traditional Elegance",
-      category: "rituals"
-    }
-  ]
+  {
+    id: 'haldi',
+    name: 'Haldi',
+    day: 'Wednesday, 2nd December',
+    time: '10:00 AM',
+    venue: 'Green Fusion',
+    city: 'Surat',
+    mapUrl: 'https://maps.app.goo.gl/qYU4dNTZMJW1jK9NA',
+    accent: '#7a9e7a',
+    accentLight: '#eef3ee',
+    accentMid: '#a8bfa8',
+    image: '/HaldiNew.png',
+  },
+  {
+    id: 'sangeet',
+    name: 'Sangeet',
+    day: 'Wednesday, 2nd December',
+    time: '6:30 PM',
+    venue: 'Rosmarinus Restro',
+    city: 'Surat',
+    mapUrl: 'https://maps.app.goo.gl/CqVaW7Eth1DmjvWY9',
+    accent: '#7a9e7a',
+    accentLight: '#eef3ee',
+    accentMid: '#a8bfa8',
+    image: '/SangeetNew.png',
+  },
+  {
+    id: 'wedding',
+    name: 'Wedding',
+    day: 'Thursday, 3rd December',
+    time: '6:30 PM',
+    venue: 'Euphoria The Fine Dine',
+    city: 'Surat',
+    mapUrl: 'https://maps.app.goo.gl/WRSubrsDHtAvMCx8A',
+    accent: '#7a9e7a',
+    accentLight: '#eef3ee',
+    accentMid: '#a8bfa8',
+    image: '/ShadiNew.png',
+  },
+];
+
+const WEDDING_ISO = '2026-12-03T18:30:00+05:30';
+
+// ─── Scroll reveal hook ───────────────────────────────────────────────────────
+function useReveal(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return { ref, visible };
+}
+
+// ─── Countdown hook ───────────────────────────────────────────────────────────
+function useCountdown(isoDate: string) {
+  const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  useEffect(() => {
+    const target = new Date(isoDate).getTime();
+    const tick = () => {
+      const diff = target - Date.now();
+      if (diff <= 0) { setTime({ days: 0, hours: 0, minutes: 0, seconds: 0 }); return; }
+      setTime({
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [isoDate]);
+  return time;
+}
+
+// ─── SVG Illustrations removed — using image files instead ────────────────────
+
+// ─── Shared decorations ───────────────────────────────────────────────────────
+const FloralDivider = () => (
+  <div className="flex items-center justify-center gap-3 my-2" aria-hidden="true">
+    <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#a8bfa8]" />
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="3" fill="#a8bfa8" />
+      {[0,45,90,135,180,225,270,315].map((deg, i) => (
+        <ellipse key={i} cx="14" cy="14" rx="2.5" ry="5.5" fill="#c8dac8" opacity="0.8"
+          transform={`rotate(${deg} 14 14) translate(0 -7)`} />
+      ))}
+    </svg>
+    <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#a8bfa8]" />
+  </div>
+);
+
+const LeafLeft = () => (
+  <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M50 5 C20 10, 5 30, 10 70 C20 55, 35 40, 50 5Z" fill="#c8dac8" opacity="0.6" />
+    <path d="M50 5 C30 15, 15 35, 10 70" stroke="#a8bfa8" strokeWidth="1" fill="none" />
+    <path d="M10 70 C18 55, 28 42, 38 28" stroke="#a8bfa8" strokeWidth="0.7" fill="none" opacity="0.5" />
+    <path d="M10 70 C22 52, 34 36, 44 20" stroke="#a8bfa8" strokeWidth="0.7" fill="none" opacity="0.5" />
+  </svg>
+);
+
+const LeafRight = () => (
+  <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ transform: 'scaleX(-1)' }}>
+    <path d="M50 5 C20 10, 5 30, 10 70 C20 55, 35 40, 50 5Z" fill="#c8dac8" opacity="0.6" />
+    <path d="M50 5 C30 15, 15 35, 10 70" stroke="#a8bfa8" strokeWidth="1" fill="none" />
+    <path d="M10 70 C18 55, 28 42, 38 28" stroke="#a8bfa8" strokeWidth="0.7" fill="none" opacity="0.5" />
+    <path d="M10 70 C22 52, 34 36, 44 20" stroke="#a8bfa8" strokeWidth="0.7" fill="none" opacity="0.5" />
+  </svg>
+);
+
+const CornerFloral = ({ position }: { position: 'tl' | 'tr' | 'bl' | 'br' }) => {
+  const transforms: Record<string, string> = { tl: '', tr: 'scaleX(-1)', bl: 'scaleY(-1)', br: 'scale(-1,-1)' };
+  return (
+    <svg width="110" height="110" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true" style={{ transform: transforms[position] }}>
+      <path d="M5 85 C5 50, 20 20, 85 5" stroke="#a8bfa8" strokeWidth="1.2" fill="none" />
+      <ellipse cx="25" cy="60" rx="8" ry="12" fill="#d0ddd0" opacity="0.7" transform="rotate(-40 25 60)" />
+      <ellipse cx="45" cy="38" rx="7" ry="11" fill="#c8dac8" opacity="0.6" transform="rotate(-55 45 38)" />
+      <ellipse cx="62" cy="22" rx="6" ry="9" fill="#d0ddd0" opacity="0.55" transform="rotate(-65 62 22)" />
+      <circle cx="20" cy="68" r="3" fill="#e8b89a" opacity="0.6" />
+      <circle cx="52" cy="30" r="2.5" fill="#e8b89a" opacity="0.5" />
+      <circle cx="70" cy="14" r="2" fill="#e8b89a" opacity="0.45" />
+    </svg>
+  );
 };
 
+// ─── Reveal wrapper ───────────────────────────────────────────────────────────
+type RevealProps = {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  direction?: 'up' | 'left' | 'right' | 'fade';
+};
+
+function Reveal({ children, className = '', delay = 0, direction = 'up' }: RevealProps) {
+  const { ref, visible } = useReveal(0.12);
+
+  const base = 'transition-all duration-700 ease-out';
+  const hiddenStyles: Record<string, React.CSSProperties> = {
+    up:    { opacity: 0, transform: 'translateY(36px)' },
+    left:  { opacity: 0, transform: 'translateX(-36px)' },
+    right: { opacity: 0, transform: 'translateX(36px)' },
+    fade:  { opacity: 0, transform: 'none' },
+  };
+  const visibleStyle: React.CSSProperties = { opacity: 1, transform: 'none', transitionDelay: `${delay}ms` };
+  const hiddenStyle: React.CSSProperties = { ...hiddenStyles[direction], transitionDelay: `${delay}ms` };
+
+  return (
+    <div ref={ref} className={`${base} ${className}`} style={visible ? visibleStyle : hiddenStyle}>
+      {children}
+    </div>
+  );
+}
+
+// ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
-  // Navigation & UI States
-  const [isUnveiled, setIsUnveiled] = useState(false);
-  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
-  const [activeTab, setActiveTab] = useState('all');
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [activeSection, setActiveSection] = useState('hero');
+  const countdown = useCountdown(WEDDING_ISO);
 
-  // RSVP Form state
-  const [rsvpData, setRsvpData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    attending: 'yes',
+  const [rsvp, setRsvp] = useState({
+    name: '', phone: '',
+    attending: 'yes' as 'yes' | 'no',
     guestCount: '1',
-    dietary: 'vegetarian',
-    events: ['haldi', 'sangeet', 'wedding', 'reception'],
-    message: ''
+    events: ['mehandi', 'haldi', 'sangeet', 'wedding'],
+    message: '',
   });
-  const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  // Audio Reference
-  const audioRef = useRef(null);
-
-  // Countdown State
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  // Countdown calculation
-  useEffect(() => {
-    const target = new Date(EVENT_DETAILS.couple.isoDate).getTime();
-
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const diff = target - now;
-
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((diff % (1000 * 60)) / 1000)
-        });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Handle Music Unveil
-  const handleUnveil = () => {
-    setIsUnveiled(true);
-    if (audioRef.current) {
-      audioRef.current.volume = 0.4;
-      audioRef.current.play().then(() => {
-        setIsPlayingMusic(true);
-      }).catch((err) => {
-        console.log("Audio play blocked by browser:", err);
-        setIsPlayingMusic(false);
-      });
-    }
+  const toggleEvent = (id: string) => {
+    setRsvp(prev => ({
+      ...prev,
+      events: prev.events.includes(id) ? prev.events.filter(e => e !== id) : [...prev.events, id],
+    }));
   };
 
-  const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isPlayingMusic) {
-        audioRef.current.pause();
-        setIsPlayingMusic(false);
-      } else {
-        audioRef.current.play().then(() => {
-          setIsPlayingMusic(true);
-        }).catch(() => setIsPlayingMusic(false));
-      }
-    }
-  };
-
-  // RSVP Handler
-  const handleRSVPSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!rsvpData.name || !rsvpData.phone) return;
-    setRsvpSubmitted(true);
-  };
+    if (!rsvp.name.trim() || !rsvp.phone.trim()) return;
 
-  const handleEventCheck = (eventId) => {
-    setRsvpData(prev => {
-      const exists = prev.events.includes(eventId);
-      return {
-        ...prev,
-        events: exists 
-          ? prev.events.filter(id => id !== eventId)
-          : [...prev.events, eventId]
-      };
+    const formData = new FormData();
+    formData.append('entry.1170899072', rsvp.name);
+    formData.append('entry.1348479287', rsvp.phone);
+    formData.append('entry.1158806466', rsvp.attending === 'yes' ? 'Joyfully Accept' : 'Regretfully Decline');
+    formData.append('entry.1241236990', rsvp.guestCount);
+    
+    // For checkboxes, append each selected event separately with the same entry ID
+    rsvp.events.forEach(eventId => {
+      const eventName = EVENTS.find(ev => ev.id === eventId)?.name;
+      if (eventName) {
+        formData.append('entry.460240215', eventName);
+      }
     });
+    
+    formData.append('entry.907231286', rsvp.message);
+
+    try {
+      await fetch(
+        'https://docs.google.com/forms/d/1NgU9yuf4jEs7gxdSRx6sHWA8z7_8nkjpzc-OD4jx604/formResponse',
+        { method: 'POST', body: formData, mode: 'no-cors' }
+      );
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting RSVP:', error);
+      setSubmitted(true);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF6EE] text-[#2C221E] font-serif relative overflow-x-hidden selection:bg-[#D4AF37]/30 selection:text-[#4A0E17]">
-      
-      {/* Background Ambient Audio */}
-      <audio 
-        ref={audioRef} 
-        loop 
-        src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=indian-flute-112319.mp3" 
-      />
+    <div className="min-h-screen floral-bg text-[#3d2b1f] overflow-x-hidden">
 
-      {/* Floating Music Control */}
-      {isUnveiled && (
-        <button
-          onClick={toggleMusic}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#4A0E17] text-[#D4AF37] border-2 border-[#D4AF37] flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 group"
-          title={isPlayingMusic ? "Mute Background Music" : "Play Background Music"}
-        >
-          {isPlayingMusic ? (
-            <Volume2 className="w-5 h-5 animate-pulse text-[#F3E5AB]" />
-          ) : (
-            <VolumeX className="w-5 h-5 text-[#D4AF37]" />
-          )}
-          <span className="absolute -top-10 right-0 bg-[#4A0E17] text-[#F3E5AB] text-xs px-2 py-1 rounded shadow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-[#D4AF37]/30">
-            {isPlayingMusic ? 'Mute Music' : 'Play Music'}
-          </span>
-        </button>
-      )}
-
-      {/* --- 1. ROYAL ENVELOPE / WAX SEAL UNVEIL OVERLAY --- */}
-      {!isUnveiled && (
-        <div className="fixed inset-0 z-[100] bg-gradient-to-br from-[#2B080D] via-[#4A0E17] to-[#1F0509] flex flex-col items-center justify-center p-6 text-center text-[#F3E5AB] transition-all duration-1000">
-          
-          {/* Decorative Corner Borders */}
-          <div className="absolute top-6 left-6 w-16 h-16 border-t-2 border-l-2 border-[#D4AF37]/60 pointer-events-none" />
-          <div className="absolute top-6 right-6 w-16 h-16 border-t-2 border-r-2 border-[#D4AF37]/60 pointer-events-none" />
-          <div className="absolute bottom-6 left-6 w-16 h-16 border-b-2 border-l-2 border-[#D4AF37]/60 pointer-events-none" />
-          <div className="absolute bottom-6 right-6 w-16 h-16 border-b-2 border-r-2 border-[#D4AF37]/60 pointer-events-none" />
-
-          {/* Subtitle Header */}
-          <div className="flex items-center gap-2 text-[#D4AF37] text-sm uppercase tracking-[0.3em] font-light mb-2">
-            <Sparkles className="w-4 h-4" />
-            <span>Official Royal Invitation</span>
-            <Sparkles className="w-4 h-4" />
-          </div>
-
-          <h1 className="font-serif italic text-4xl sm:text-6xl text-[#F3E5AB] mb-2 tracking-wide font-normal">
+      {/* ── HEADER ── */}
+      <header className="sticky top-0 z-40 bg-[#faf7f2]/90 backdrop-blur-md border-b border-[#d0ddd0]">
+        <div className="max-w-5xl mx-auto px-5 py-3 flex items-center justify-between">
+          <a href="#hero" className="font-script text-2xl text-[#5a7e5a] tracking-wide">
             Aurish Parinay
-          </h1>
-          <p className="text-xs sm:text-sm text-[#D4AF37]/80 uppercase tracking-[0.2em] max-w-md mb-8">
-            Request the honor of your presence at the celebration of their matrimony
-          </p>
-
-          {/* Interactive Wax Seal Stamp */}
-          <div className="relative group cursor-pointer" onClick={handleUnveil}>
-            <div className="absolute -inset-4 rounded-full bg-[#D4AF37]/20 blur-md group-hover:bg-[#D4AF37]/40 transition-all duration-500 animate-pulse" />
-            
-            <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-[#D4AF37] via-[#997A15] to-[#594406] p-1 shadow-2xl flex items-center justify-center transform group-hover:scale-105 active:scale-95 transition-transform duration-300 border-2 border-[#F3E5AB]">
-              <div className="w-full h-full rounded-full border border-[#FAF6EE]/40 flex flex-col items-center justify-center p-2 text-center bg-[#4A0E17]/30 backdrop-blur-sm">
-                <Heart className="w-7 h-7 text-[#F3E5AB] fill-[#D4AF37] mb-1 animate-bounce" />
-                <span className="text-[10px] font-bold text-[#F3E5AB] tracking-widest uppercase">
-                  UNVEIL
-                </span>
-                <span className="text-[8px] text-[#D4AF37] tracking-wider">SEAL OF UNION</span>
-              </div>
-            </div>
-          </div>
-
-          <p className="mt-8 text-xs text-[#D4AF37]/70 tracking-widest uppercase font-light animate-pulse">
-            Tap the wax seal to open the invitation
-          </p>
-        </div>
-      )}
-
-      {}
-      {/* --- 2. STICKY HEADER NAV --- */}
-      <header className="sticky top-0 z-40 bg-[#FAF6EE]/90 backdrop-blur-md border-b border-[#D4AF37]/30 shadow-sm transition-all">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <a href="#hero" className="flex items-center gap-2 group">
-            <span className="font-serif text-2xl font-bold tracking-tight text-[#4A0E17]">
-              Aurish<span className="text-[#D4AF37] font-light italic ml-1">Parinay</span>
-            </span>
           </a>
-
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide uppercase text-[#2C221E]/80">
-            <a href="#story" className="hover:text-[#4A0E17] transition-colors">Our Story</a>
-            <a href="#events" className="hover:text-[#4A0E17] transition-colors">Schedule</a>
-            <a href="#gallery" className="hover:text-[#4A0E17] transition-colors">Gallery</a>
-            <a href="#rsvp" className="hover:text-[#4A0E17] transition-colors">RSVP</a>
+          <nav className="hidden md:flex gap-7 text-xs font-medium tracking-[0.12em] uppercase text-[#5a7e5a]">
+            <a href="#events" className="hover:text-[#3d2b1f] transition-colors">Schedule</a>
+            <a href="#rsvp" className="hover:text-[#3d2b1f] transition-colors">RSVP</a>
           </nav>
-
-          <a 
-            href="#rsvp" 
-            className="px-4 py-2 text-xs font-semibold uppercase tracking-wider bg-[#4A0E17] text-[#F3E5AB] rounded-full border border-[#D4AF37] hover:bg-[#6D1522] transition-all shadow-md"
-          >
-            RSVP Now
+          <a href="#rsvp"
+            className="px-4 py-1.5 text-xs font-medium uppercase tracking-widest border border-[#a8bfa8] text-[#5a7e5a] rounded-full hover:bg-[#eef3ee] transition-colors">
+            RSVP
           </a>
         </div>
       </header>
 
-      {}
-      {/* --- 3. HERO SECTION --- */}
-      <section id="hero" className="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-4 py-16 bg-gradient-to-b from-[#FAF6EE] via-[#F5EEDC] to-[#FAF6EE] border-b border-[#D4AF37]/30 overflow-hidden">
-        
-        {/* Subtle Mandala Decorative Pattern BG */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px]" />
+      {/* ── HERO ── */}
+      <section id="hero" className="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-5 py-20 overflow-hidden">
+        <div className="absolute top-0 left-0 pointer-events-none"><CornerFloral position="tl" /></div>
+        <div className="absolute top-0 right-0 pointer-events-none"><CornerFloral position="tr" /></div>
+        <div className="absolute bottom-0 left-0 pointer-events-none"><CornerFloral position="bl" /></div>
+        <div className="absolute bottom-0 right-0 pointer-events-none"><CornerFloral position="br" /></div>
 
-        <div className="relative z-10 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#4A0E17]/5 border border-[#D4AF37]/40 text-[#4A0E17] text-xs uppercase tracking-widest mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span>Save The Date • December 12, 2026</span>
-            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+        <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+
+          {/* Ganesha Image */}
+          <div
+            className="mb-8"
+            style={{ animation: 'heroFadeUp 0.8s 0s ease both' }}
+          >
+            <img src="/GaneshaNew.png" alt="Ganesha" className="w-24 h-24 object-contain" />
           </div>
 
-          <p className="text-sm sm:text-base text-[#D4AF37] font-semibold uppercase tracking-[0.3em] mb-2">
-            {EVENT_DETAILS.couple.tagline}
-          </p>
+          {/* Eyebrow — removed */}
 
-          <h1 className="font-serif italic text-5xl sm:text-7xl lg:text-8xl text-[#4A0E17] mb-4 font-normal leading-tight">
-            {EVENT_DETAILS.couple.groom} <span className="text-[#D4AF37] font-light">&</span> {EVENT_DETAILS.couple.bride}
+          {/* Script title */}
+          <h1
+            className="font-script text-6xl sm:text-8xl text-[#5a7e5a] mb-1 leading-none"
+            style={{ animation: 'heroFadeUp 0.9s 0.1s ease both' }}
+          >
+            Aurish Parinay
           </h1>
 
-          <p className="text-base sm:text-lg text-[#2C221E]/80 max-w-xl mx-auto italic mb-8 font-serif">
-            With joyous hearts and the blessings of our elders, we invite you to celebrate the beginning of our forever in {EVENT_DETAILS.couple.venueCity}.
-          </p>
-
-          {/* Live Countdown Timer */}
-          <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-lg mx-auto mb-10">
-            {[
-              { label: 'Days', val: timeLeft.days },
-              { label: 'Hours', val: timeLeft.hours },
-              { label: 'Minutes', val: timeLeft.minutes },
-              { label: 'Seconds', val: timeLeft.seconds }
-            ].map((unit, idx) => (
-              <div key={idx} className="bg-white/80 backdrop-blur-sm border border-[#D4AF37]/40 rounded-xl p-3 sm:p-4 shadow-md flex flex-col items-center">
-                <span className="font-serif text-2xl sm:text-4xl font-bold text-[#4A0E17]">
-                  {String(unit.val).padStart(2, '0')}
-                </span>
-                <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#D4AF37] mt-1 font-sans">
-                  {unit.label}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a 
-              href="#events" 
-              className="px-6 py-3 rounded-full bg-[#4A0E17] text-[#F3E5AB] font-semibold text-xs sm:text-sm uppercase tracking-widest shadow-lg hover:bg-[#6D1522] transition-all flex items-center gap-2 border border-[#D4AF37]"
-            >
-              <Calendar className="w-4 h-4 text-[#D4AF37]" /> View Schedule
-            </a>
-            <a 
-              href="#rsvp" 
-              className="px-6 py-3 rounded-full bg-white text-[#4A0E17] font-semibold text-xs sm:text-sm uppercase tracking-widest border border-[#D4AF37] shadow-sm hover:bg-[#FAF6EE] transition-all flex items-center gap-2"
-            >
-              <Heart className="w-4 h-4 text-[#4A0E17] fill-[#4A0E17]" /> Send Wishes
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {}
-      {/* --- 4. OUR STORY TIMELINE --- */}
-      <section id="story" className="py-20 px-4 max-w-5xl mx-auto border-b border-[#D4AF37]/20">
-        <div className="text-center mb-14">
-          <span className="text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">The Beginning</span>
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#4A0E17] mt-1">Our Journey of Love</h2>
-          <div className="w-16 h-0.5 bg-[#D4AF37] mx-auto mt-4" />
-        </div>
-
-        <div className="relative border-l-2 border-[#D4AF37]/40 ml-4 md:ml-1/2 space-y-12">
-          {EVENT_DETAILS.timeline.map((item, idx) => (
-            <div key={idx} className="relative pl-8 md:pl-0 flex flex-col md:flex-row items-center group">
-              
-              {/* Timeline Marker */}
-              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#4A0E17] border-2 border-[#D4AF37] group-hover:scale-125 transition-transform" />
-
-              <div className={`w-full md:w-1/2 ${idx % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto'}`}>
-                <div className="bg-white p-6 rounded-2xl border border-[#D4AF37]/30 shadow-md hover:shadow-xl transition-all">
-                  <span className="inline-block px-3 py-1 bg-[#4A0E17]/10 text-[#4A0E17] text-xs font-bold rounded-full mb-2">
-                    {item.year}
-                  </span>
-                  <h3 className="font-serif text-2xl text-[#4A0E17] font-bold">{item.title}</h3>
-                  <p className="text-xs uppercase tracking-wider text-[#D4AF37] font-sans font-semibold mb-3">{item.subtitle}</p>
-                  
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-full h-48 object-cover rounded-xl mb-3 border border-[#D4AF37]/20" 
-                  />
-                  
-                  <p className="text-sm text-[#2C221E]/80 leading-relaxed font-sans">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {}
-      {/* --- 5. EVENT SCHEDULE & LOCATIONS --- */}
-      <section id="events" className="py-20 px-4 max-w-6xl mx-auto border-b border-[#D4AF37]/20">
-        <div className="text-center mb-14">
-          <span className="text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">Celebration Itinerary</span>
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#4A0E17] mt-1">Wedding Ceremonies</h2>
-          <p className="text-sm text-[#2C221E]/70 max-w-md mx-auto mt-2">
-            Join us across two joyful days of music, vibrant colors, sacred rituals, and feast.
-          </p>
-          <div className="w-16 h-0.5 bg-[#D4AF37] mx-auto mt-4" />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {EVENT_DETAILS.events.map((event) => (
-            <div 
-              key={event.id}
-              className="bg-white rounded-2xl border border-[#D4AF37]/30 p-6 sm:p-8 shadow-md hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#D4AF37]/20 to-transparent rounded-bl-full pointer-events-none" />
-
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-3xl">{event.icon}</span>
-                  <span className="px-3 py-1 bg-[#FAF6EE] text-[#4A0E17] text-xs font-bold border border-[#D4AF37]/40 rounded-full">
-                    {event.date}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-2xl text-[#4A0E17] font-bold mb-2">{event.name}</h3>
-                
-                <p className="text-sm text-[#2C221E]/80 mb-6 font-sans leading-relaxed">
-                  {event.desc}
-                </p>
-
-                <div className="space-y-2 text-xs font-sans text-[#2C221E]/90 mb-6">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                    <span>{event.time}</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-semibold text-[#4A0E17]">{event.location}</p>
-                      <p className="text-[#2C221E]/60">{event.address}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 pt-2 border-t border-[#D4AF37]/15">
-                    <Sparkles className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                    <span className="italic text-[#4A0E17] font-serif">Dress Code: {event.dressCode}</span>
-                  </div>
-                </div>
-              </div>
-
-              <a 
-                href={event.mapUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 rounded-xl border border-[#D4AF37] text-[#4A0E17] hover:bg-[#4A0E17] hover:text-[#F3E5AB] font-semibold text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-2"
-              >
-                <Compass className="w-4 h-4" /> Open in Google Maps
-              </a>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {}
-      {/* --- 6. PHOTO GALLERY & LIGHTBOX --- */}
-      <section id="gallery" className="py-20 px-4 max-w-6xl mx-auto border-b border-[#D4AF37]/20">
-        <div className="text-center mb-10">
-          <span className="text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">Captured Memories</span>
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#4A0E17] mt-1">Pre-Wedding Gallery</h2>
-          <div className="w-16 h-0.5 bg-[#D4AF37] mx-auto mt-4" />
-        </div>
-
-        {/* Category Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
-          {[
-            { id: 'all', label: 'All Moments' },
-            { id: 'prewedding', label: 'Pre-Wedding' },
-            { id: 'engagement', label: 'Engagement' },
-            { id: 'rituals', label: 'Rituals' }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-1.5 rounded-full text-xs uppercase tracking-wider font-medium transition-all ${
-                activeTab === tab.id 
-                  ? 'bg-[#4A0E17] text-[#F3E5AB] shadow-md border border-[#D4AF37]' 
-                  : 'bg-white text-[#2C221E]/70 border border-[#D4AF37]/30 hover:border-[#D4AF37]'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {EVENT_DETAILS.gallery
-            .filter(item => activeTab === 'all' || item.category === activeTab)
-            .map((img, idx) => (
-              <div 
-                key={idx}
-                onClick={() => setSelectedImage(img)}
-                className="group relative h-64 rounded-2xl overflow-hidden cursor-pointer border border-[#D4AF37]/30 shadow-md"
-              >
-                <img 
-                  src={img.url} 
-                  alt={img.caption} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#4A0E17]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <p className="text-white font-serif text-lg">{img.caption}</p>
-                </div>
-              </div>
-            ))}
-        </div>
-
-        {/* Lightbox Modal */}
-        {selectedImage && (
-          <div 
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
+          {/* Names with Parents */}
+          <div
+            className="text-center"
+            style={{ animation: 'heroFadeUp 0.9s 0.2s ease both' }}
           >
-            <div className="relative max-w-4xl max-h-[90vh] text-center" onClick={e => e.stopPropagation()}>
-              <button 
-                onClick={() => setSelectedImage(null)}
-                className="absolute -top-10 right-0 text-white hover:text-[#D4AF37]"
-              >
-                <X className="w-8 h-8" />
-              </button>
-              <img 
-                src={selectedImage.url} 
-                alt={selectedImage.caption} 
-                className="max-h-[80vh] w-auto mx-auto rounded-xl border-2 border-[#D4AF37]" 
-              />
-              <p className="text-[#F3E5AB] font-serif text-xl mt-4">{selectedImage.caption}</p>
-            </div>
+            <p
+              className="text-3xl sm:text-4xl text-[#3d2b1f] tracking-wide font-normal"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontStyle: 'italic',
+              }}
+            >
+              Aulick
+            </p>
+            <p className="text-xs text-[#7a9e7a] mt-1 mb-3 tracking-widest uppercase font-medium">
+              d/o Sneh Lata &amp; Vijay Prasad
+            </p>
+
+            <p className="text-sm text-[#5d4a3a] mt-4 mb-4 italic font-serif">
+              with
+            </p>
+
+            <p
+              className="text-3xl sm:text-4xl text-[#3d2b1f] tracking-wide font-normal"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontStyle: 'italic',
+              }}
+            >
+              Rishi
+            </p>
+            <p className="text-xs text-[#7a9e7a] mt-1 tracking-widest uppercase font-medium">
+              s/o Suman Verma &amp; Shiv Kumar Verma
+            </p>
           </div>
-        )}
+
+          <div style={{ animation: 'heroFadeUp 0.9s 0.3s ease both' }}>
+            <FloralDivider />
+          </div>
+
+          {/* Date — UPDATED */}
+          <p
+            className="text-xs uppercase tracking-[0.25em] text-[#7a9e7a] mt-1 mb-10"
+            style={{ animation: 'heroFadeUp 0.9s 0.35s ease both' }}
+          >
+            3rd December 2026 &nbsp;·&nbsp; Surat, India
+          </p>
+
+          {/* Countdown — Single Line */}
+          <div
+            className="text-center mb-10"
+            aria-label="Days until wedding"
+            style={{ animation: 'heroFadeUp 0.9s 0.45s ease both' }}
+          >
+            <p className="text-4xl sm:text-5xl font-light text-[#3d2b1f]"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              {countdown.days} <span className="text-xs uppercase tracking-[0.2em] text-[#7a9e7a] font-medium ml-2">Days to Go</span>
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-3 justify-center" style={{ animation: 'heroFadeUp 0.9s 0.55s ease both' }}>
+            <a href="#events"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#5a7e5a] text-white text-xs uppercase tracking-widest font-medium shadow-md hover:bg-[#4a6e4a] transition-colors">
+              <Calendar className="w-3.5 h-3.5" /> View Schedule
+            </a>
+            <a href="#rsvp"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#a8bfa8] text-[#5a7e5a] text-xs uppercase tracking-widest font-medium hover:bg-[#eef3ee] transition-colors">
+              <Heart className="w-3.5 h-3.5" /> RSVP
+            </a>
+          </div>
+        </div>
       </section>
 
-      {}
-      {/* --- 7. INTERACTIVE RSVP FORM --- */}
-      <section id="rsvp" className="py-20 px-4 max-w-3xl mx-auto">
-        <div className="bg-white rounded-3xl border-2 border-[#D4AF37] p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-          
-          <div className="text-center mb-10">
-            <span className="text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">Your Presence Matters</span>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#4A0E17] mt-1">RSVP & Blessings</h2>
-            <p className="text-sm text-[#2C221E]/70 mt-2">Please confirm your attendance by November 15, 2026</p>
-            <div className="w-16 h-0.5 bg-[#D4AF37] mx-auto mt-4" />
-          </div>
+      {/* ── EVENTS ── */}
+      <section id="events" className="py-20 px-5 bg-[#f5efe6]/40 border-y border-[#d0ddd0]">
+        <div className="max-w-5xl mx-auto">
 
-          {rsvpSubmitted ? (
-            <div className="text-center py-10 space-y-4">
-              <div className="w-16 h-16 bg-[#4A0E17]/10 text-[#4A0E17] rounded-full flex items-center justify-center mx-auto border border-[#D4AF37]">
-                <Check className="w-8 h-8 text-[#4A0E17]" />
-              </div>
-              <h3 className="font-serif text-3xl text-[#4A0E17]">Thank You, {rsvpData.name}!</h3>
-              <p className="text-sm text-[#2C221E]/80 max-w-md mx-auto">
-                Your response has been recorded. We eagerly look forward to celebrating with you!
-              </p>
-              <button 
-                onClick={() => setRsvpSubmitted(false)}
-                className="mt-4 px-6 py-2 text-xs uppercase tracking-wider font-semibold border border-[#D4AF37] rounded-full text-[#4A0E17] hover:bg-[#FAF6EE]"
+          <Reveal className="text-center mb-14" direction="fade">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#7a9e7a] mb-2">Join Us</p>
+            <h2 className="font-serif text-4xl sm:text-5xl text-[#3d2b1f]"
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontWeight: 300 }}>
+              The Celebrations
+            </h2>
+            <FloralDivider />
+            <p className="text-sm text-[#5d4a3a]/70 max-w-sm mx-auto mt-1">
+              Four beautiful ceremonies over three days in Surat
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {EVENTS.map((ev, idx) => (
+              <Reveal
+                key={ev.id}
+                direction={idx % 2 === 0 ? 'left' : 'right'}
+                delay={idx * 80}
               >
-                Edit Response
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleRSVPSubmit} className="space-y-6 font-sans">
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#4A0E17] mb-1">Your Name *</label>
-                  <input 
-                    type="text" 
-                    required 
-                    value={rsvpData.name}
-                    onChange={e => setRsvpData({...rsvpData, name: e.target.value})}
-                    placeholder="e.g. Vikramaditya Sharma"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D4AF37]/40 focus:border-[#4A0E17] focus:ring-1 focus:ring-[#4A0E17] outline-none text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-[#4A0E17] mb-1">Phone Number *</label>
-                  <input 
-                    type="tel" 
-                    required 
-                    value={rsvpData.phone}
-                    onChange={e => setRsvpData({...rsvpData, phone: e.target.value})}
-                    placeholder="+91 98765 43210"
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D4AF37]/40 focus:border-[#4A0E17] focus:ring-1 focus:ring-[#4A0E17] outline-none text-sm"
-                  />
-                </div>
-              </div>
+                <div className="bg-white rounded-3xl border border-[#e8ddd0] shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  {/* Event Image */}
+                  <div className="w-full bg-gray-100" style={{ height: '176px', overflow: 'hidden' }}>
+                    <img src={ev.image} alt={ev.name} className="w-full h-full object-contain" />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-semibold uppercase text-[#4A0E17] mb-1">Will You Attend?</label>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { id: 'yes', label: 'Joyfully Accept' },
-                    { id: 'no', label: 'Regretfully Decline' }
-                  ].map((opt) => (
-                    <button
-                      type="button"
-                      key={opt.id}
-                      onClick={() => setRsvpData({...rsvpData, attending: opt.id})}
-                      className={`py-2.5 rounded-xl text-xs uppercase tracking-wider font-semibold border transition-all ${
-                        rsvpData.attending === opt.id
-                          ? 'bg-[#4A0E17] text-[#F3E5AB] border-[#D4AF37]'
-                          : 'bg-white text-[#2C221E] border-[#D4AF37]/40'
-                      }`}
+                  {/* Top accent bar */}
+                  <div className="h-1 w-full" style={{ backgroundColor: ev.accent }} />
+
+                  <div className="p-6 sm:p-7">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-2xl text-[#3d2b1f]"
+                        style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontWeight: 400 }}>
+                        {ev.name}
+                      </h3>
+                      <span className="text-xs font-medium px-3 py-1 rounded-full border"
+                        style={{ backgroundColor: ev.accentLight, borderColor: ev.accentMid, color: '#3d2b1f' }}>
+                        {ev.city}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2.5 text-sm text-[#5d4a3a] mb-6">
+                      <div className="flex items-center gap-2.5">
+                        <Calendar className="w-4 h-4 shrink-0 text-[#a8bfa8]" />
+                        <span>{ev.day}</span>
+                      </div>
+                      <div className="flex items-center gap-2.5">
+                        <Clock className="w-4 h-4 shrink-0 text-[#a8bfa8]" />
+                        <span>{ev.time}</span>
+                      </div>
+                      <div className="flex items-start gap-2.5">
+                        <MapPin className="w-4 h-4 shrink-0 text-[#a8bfa8] mt-0.5" />
+                        <span className="font-medium text-[#3d2b1f]">{ev.venue}, {ev.city}</span>
+                      </div>
+                    </div>
+
+                    <a href={ev.mapUrl} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-2 rounded-xl text-xs uppercase tracking-wider font-medium border transition-colors"
+                      style={{ borderColor: ev.accentMid, color: '#3d2b1f' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = ev.accentLight; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = ''; }}
                     >
-                      {opt.label}
-                    </button>
-                  ))}
+                      <MapPin className="w-3.5 h-3.5" /> Open in Maps
+                    </a>
+                  </div>
                 </div>
-              </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {rsvpData.attending === 'yes' && (
-                <>
+      {/* ── RSVP ── */}
+      <section id="rsvp" className="py-20 px-5">
+        <div className="max-w-xl mx-auto">
+
+          <Reveal direction="fade" className="text-center mb-12">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#7a9e7a] mb-2">Your Presence</p>
+            <h2 className="font-serif text-4xl sm:text-5xl text-[#3d2b1f]"
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontWeight: 300 }}>
+              RSVP
+            </h2>
+            <FloralDivider />
+          </Reveal>
+
+          <Reveal direction="up" delay={100}>
+            <div className="bg-white rounded-3xl border border-[#e8ddd0] shadow-md p-7 sm:p-10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 opacity-40 pointer-events-none"><LeafRight /></div>
+              <div className="absolute bottom-0 left-0 opacity-30 pointer-events-none" style={{ transform: 'rotate(180deg)' }}><LeafLeft /></div>
+
+              {submitted ? (
+                <div className="relative z-10 text-center py-8 space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-[#eef3ee] border border-[#a8bfa8] flex items-center justify-center mx-auto">
+                    <Check className="w-7 h-7 text-[#5a7e5a]" />
+                  </div>
+                  <h3 className="text-3xl text-[#3d2b1f]"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic' }}>
+                    Thank you, {rsvp.name}!
+                  </h3>
+                  <p className="text-sm text-[#5d4a3a]/80">
+                    We've noted your response and can't wait to celebrate with you.
+                  </p>
+                  <button onClick={() => setSubmitted(false)}
+                    className="mt-2 text-xs uppercase tracking-widest border border-[#a8bfa8] text-[#5a7e5a] rounded-full px-5 py-1.5 hover:bg-[#eef3ee] transition-colors">
+                    Edit Response
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="relative z-10 space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold uppercase text-[#4A0E17] mb-1">Number of Guests</label>
-                      <select 
-                        value={rsvpData.guestCount}
-                        onChange={e => setRsvpData({...rsvpData, guestCount: e.target.value})}
-                        className="w-full px-4 py-2.5 rounded-xl border border-[#D4AF37]/40 focus:border-[#4A0E17] outline-none text-sm"
-                      >
-                        {[1, 2, 3, 4, 5].map(n => (
-                          <option key={n} value={n}>{n} {n === 1 ? 'Guest' : 'Guests'}</option>
-                        ))}
-                      </select>
+                      <label className="block text-[10px] uppercase tracking-[0.15em] text-[#7a9e7a] mb-1.5 font-medium">Your Name *</label>
+                      <input type="text" required value={rsvp.name}
+                        onChange={e => setRsvp({ ...rsvp, name: e.target.value })}
+                        placeholder="Full name"
+                        className="w-full px-4 py-2.5 rounded-xl border border-[#d0ddd0] bg-[#fafaf8] text-sm focus:outline-none focus:border-[#a8bfa8] focus:ring-1 focus:ring-[#a8bfa8] transition" />
                     </div>
-
                     <div>
-                      <label className="block text-xs font-semibold uppercase text-[#4A0E17] mb-1">Dietary Preference</label>
-                      <select 
-                        value={rsvpData.dietary}
-                        onChange={e => setRsvpData({...rsvpData, dietary: e.target.value})}
-                        className="w-full px-4 py-2.5 rounded-xl border border-[#D4AF37]/40 focus:border-[#4A0E17] outline-none text-sm"
-                      >
-                        <option value="vegetarian">Pure Vegetarian / Jain</option>
-                        <option value="non-vegetarian">Non-Vegetarian</option>
-                        <option value="vegan">Vegan / Gluten Free</option>
-                      </select>
+                      <label className="block text-[10px] uppercase tracking-[0.15em] text-[#7a9e7a] mb-1.5 font-medium">Phone *</label>
+                      <input type="tel" required value={rsvp.phone}
+                        onChange={e => setRsvp({ ...rsvp, phone: e.target.value })}
+                        placeholder="+91 98765 43210"
+                        className="w-full px-4 py-2.5 rounded-xl border border-[#d0ddd0] bg-[#fafaf8] text-sm focus:outline-none focus:border-[#a8bfa8] focus:ring-1 focus:ring-[#a8bfa8] transition" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase text-[#4A0E17] mb-2">Events You Will Attend</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {EVENT_DETAILS.events.map(ev => (
-                        <label key={ev.id} className="flex items-center gap-2 p-2 rounded-lg border border-[#D4AF37]/30 text-xs cursor-pointer hover:bg-[#FAF6EE]">
-                          <input 
-                            type="checkbox" 
-                            checked={rsvpData.events.includes(ev.id)}
-                            onChange={() => handleEventCheck(ev.id)}
-                            className="accent-[#4A0E17]"
-                          />
-                          <span className="font-medium text-[#2C221E]">{ev.name}</span>
-                        </label>
+                    <label className="block text-[10px] uppercase tracking-[0.15em] text-[#7a9e7a] mb-2 font-medium">Will You Attend?</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {[{ id: 'yes', label: 'Joyfully Accept' }, { id: 'no', label: 'Regretfully Decline' }].map(opt => (
+                        <button type="button" key={opt.id}
+                          onClick={() => setRsvp({ ...rsvp, attending: opt.id as 'yes' | 'no' })}
+                          className={`py-2.5 rounded-xl text-xs uppercase tracking-wider font-medium border transition-all ${
+                            rsvp.attending === opt.id
+                              ? 'bg-[#5a7e5a] text-white border-[#5a7e5a] shadow-sm'
+                              : 'bg-white text-[#3d2b1f] border-[#d0ddd0] hover:border-[#a8bfa8]'
+                          }`}>
+                          {opt.label}
+                        </button>
                       ))}
                     </div>
                   </div>
-                </>
+
+                  {rsvp.attending === 'yes' && (
+                    <>
+                      <div>
+                        <label className="block text-[10px] uppercase tracking-[0.15em] text-[#7a9e7a] mb-1.5 font-medium">Number of Guests</label>
+                        <select value={rsvp.guestCount} onChange={e => setRsvp({ ...rsvp, guestCount: e.target.value })}
+                          className="w-full px-4 py-2.5 rounded-xl border border-[#d0ddd0] bg-[#fafaf8] text-sm focus:outline-none focus:border-[#a8bfa8] transition">
+                          {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {n===1?'Guest':'Guests'}</option>)}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] uppercase tracking-[0.15em] text-[#7a9e7a] mb-2 font-medium">Events You'll Attend</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {EVENTS.map(ev => (
+                            <label key={ev.id}
+                              className="flex items-center gap-2.5 p-2.5 rounded-xl border border-[#e8ddd0] cursor-pointer hover:border-[#a8bfa8] hover:bg-[#f5f9f5] transition">
+                              <input type="checkbox" checked={rsvp.events.includes(ev.id)}
+                                onChange={() => toggleEvent(ev.id)} className="accent-[#5a7e5a] w-3.5 h-3.5" />
+                              <span className="text-xs text-[#3d2b1f] font-medium leading-tight">{ev.name}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-[0.15em] text-[#7a9e7a] mb-1.5 font-medium">Wishes for the Couple</label>
+                    <textarea rows={3} value={rsvp.message}
+                      onChange={e => setRsvp({ ...rsvp, message: e.target.value })}
+                      placeholder="Share your warmest wishes…"
+                      className="w-full px-4 py-2.5 rounded-xl border border-[#d0ddd0] bg-[#fafaf8] text-sm focus:outline-none focus:border-[#a8bfa8] focus:ring-1 focus:ring-[#a8bfa8] transition resize-none" />
+                  </div>
+
+                  <button type="submit"
+                    className="w-full py-3 bg-[#5a7e5a] text-white text-xs uppercase tracking-widest font-medium rounded-xl shadow-sm hover:bg-[#4a6e4a] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                    <Send className="w-3.5 h-3.5" /> Confirm RSVP
+                  </button>
+                  <p className="text-center text-[10px] text-[#5d4a3a]/60 tracking-wide">
+                    Please respond by 15th November 2026
+                  </p>
+                </form>
               )}
-
-              <div>
-                <label className="block text-xs font-semibold uppercase text-[#4A0E17] mb-1">Wishes & Notes for the Couple</label>
-                <textarea 
-                  rows="3"
-                  value={rsvpData.message}
-                  onChange={e => setRsvpData({...rsvpData, message: e.target.value})}
-                  placeholder="Share a warm memory or your blessings..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#D4AF37]/40 focus:border-[#4A0E17] outline-none text-sm"
-                />
-              </div>
-
-              <button 
-                type="submit"
-                className="w-full py-3 bg-[#4A0E17] text-[#F3E5AB] font-semibold text-xs uppercase tracking-widest rounded-xl border border-[#D4AF37] shadow-lg hover:bg-[#6D1522] transition-all flex items-center justify-center gap-2"
-              >
-                <Send className="w-4 h-4" /> Confirm RSVP
-              </button>
-            </form>
-          )}
-
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {}
-      {/* --- 8. FOOTER --- */}
-      <footer className="bg-[#4A0E17] text-[#F3E5AB] py-12 text-center border-t-2 border-[#D4AF37] px-4">
-        <div className="max-w-md mx-auto space-y-4">
-          <h3 className="font-serif italic text-3xl">Aurish Parinay</h3>
-          <p className="text-xs uppercase tracking-[0.2em] text-[#D4AF37]">
-            #AurishWedsAnanya • #AurishParinay2026
+      {/* ── FOOTER ── */}
+      <footer className="bg-[#3d2b1f] text-[#f5efe6] py-12 text-center border-t border-[#5d4a3a]">
+        <div className="max-w-md mx-auto space-y-3 px-5">
+          <div className="flex justify-center gap-3 mb-2" aria-hidden="true">
+            <LeafLeft />
+            <div className="flex flex-col items-center justify-center">
+              <Heart className="w-5 h-5 text-[#e8b89a] fill-[#e8b89a]" />
+            </div>
+            <LeafRight />
+          </div>
+          <h3 className="font-script text-4xl text-[#e8b89a]">Aurish Parinay</h3>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#a8bfa8]">
+            Rishi &amp; Aulick · 3rd December 2026 · Surat
           </p>
-          <div className="w-12 h-0.5 bg-[#D4AF37]/40 mx-auto" />
-          <p className="text-xs text-[#F3E5AB]/70 font-sans">
-            Created with love for our friends and family. See you in Bengaluru!
-          </p>
+          <div className="w-10 h-px bg-[#5d4a3a] mx-auto" />
+          <p className="text-xs text-[#f5efe6]/50 font-light">Made with love for our family &amp; friends</p>
         </div>
       </footer>
 
+      {/* ── GLOBAL KEYFRAMES ── */}
+      <style>{`
+        @keyframes heroFadeUp {
+          from { opacity: 0; transform: translateY(28px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
