@@ -65,6 +65,9 @@ function useCountdown(isoDate: string) {
 export default function App() {
   const countdown = useCountdown(WEDDING_ISO);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showItinerary, setShowItinerary] = useState(false);
+  const [showExploreSurat, setShowExploreSurat] = useState(false);
+  const [showTrip, setShowTrip] = useState(false);
 
   const [rsvp, setRsvp] = useState({
     name: '', phone: '',
@@ -112,7 +115,11 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5e6d3]">
+    <div className="min-h-screen bg-[#f5e6d3]" style={{
+      maxWidth: '600px',
+      margin: '0 auto',
+      width: '100%'
+    }}>
       <style>{`
         /* ─── SIDEBAR ─── */
         .sidebar {
@@ -182,11 +189,11 @@ export default function App() {
         .navbar {
           position: fixed;
           top: 0;
-          left: 0;
-          right: 0;
+          left: 50%;
+          transform: translateX(-50%);
           z-index: 100;
           background: linear-gradient(to bottom, #f5e6d3 0%, #f0dcc8 100%);
-          padding: 0.5rem 2rem;
+          padding: 0 1rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -197,6 +204,8 @@ export default function App() {
           border-bottom: 2px solid #d4af37;
           height: 70px;
           gap: 2rem;
+          width: 100%;
+          max-width: 600px;
         }
 
         .navbar-left {
@@ -302,7 +311,7 @@ export default function App() {
         .hero {
           position: relative;
           width: 100%;
-          height: calc(100vh - 70px);
+          aspect-ratio: 887 / 1580;
           margin-top: 70px;
           overflow: hidden;
           background: #f5e6d3;
@@ -310,12 +319,11 @@ export default function App() {
 
         /* ─── LAYER 0: ARCHITECTURE BACKGROUND ─── */
         .hero-architecture {
-          position: absolute;
-          inset: 0;
+          display: block;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center center;
+          object-position: top center;
           z-index: 0;
         }
       `}</style>
@@ -329,11 +337,13 @@ export default function App() {
       {/* ─── SIDEBAR ─── */}
       <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <nav className="sidebar-menu">
-          <a href="#home" className="sidebar-item" onClick={() => setSidebarOpen(false)}>Home</a>
-          <a href="#story" className="sidebar-item" onClick={() => setSidebarOpen(false)}>Our Story</a>
-          <a href="#events" className="sidebar-item" onClick={() => setSidebarOpen(false)}>Events</a>
-          <a href="#travel" className="sidebar-item" onClick={() => setSidebarOpen(false)}>Travel & Stay</a>
-          <a href="#rsvp" className="sidebar-item" onClick={() => setSidebarOpen(false)}>RSVP</a>
+          <a href="#home" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Home</a>
+          <a href="#story" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Our Story</a>
+          <a href="#events" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Events</a>
+          <a href="#travel" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Travel & Stay</a>
+          <a href="#explore-surat" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(false); setShowExploreSurat(true); setShowTrip(false); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Explore Surat</a>
+          <a href="#trip" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(false); setShowExploreSurat(false); setShowTrip(true); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Trip</a>
+          <a href="#rsvp" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>RSVP</a>
         </nav>
       </div>
 
@@ -353,6 +363,32 @@ export default function App() {
         </div>
       </nav>
 
+      {showTrip ? (
+        <main style={{ marginTop: '70px' }}>
+          <img
+            src="/Trip.png"
+            alt="Trip information"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </main>
+      ) : showExploreSurat ? (
+        <main style={{ marginTop: '70px' }}>
+          <img
+            src="/Explore%20Surat.png"
+            alt="Explore Surat local guide"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </main>
+      ) : showItinerary ? (
+        <main style={{ marginTop: '70px' }}>
+          <img
+            src="/Detailed%20Itinerary.png"
+            alt="Detailed wedding itinerary"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </main>
+      ) : (
+      <main id="home">
       {/* ─── HERO SECTION ─── */}
       <section className="hero">
         {/* Layer 0: Architecture Background */}
@@ -368,108 +404,278 @@ export default function App() {
       <div style={{ height: '40px', background: '#f5e6d3' }}></div>
 
       {/* ─── FESTIVITES SECTION ─── */}
-      <section id="events" style={{ width: '100%', height: 'auto' }}>
+      <section id="events" style={{ position: 'relative', width: '100%', height: 'auto' }}>
         <img src="/Festivities.png" alt="Festivities" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        {[
+          { name: 'Mehandi', top: '25.7%' },
+          { name: 'Haldi', top: '46.6%' },
+          { name: 'Sangeet', top: '66.1%' },
+          { name: 'Varmala and Pheras', top: '85.5%' },
+        ].map(event => (
+          <button
+            key={event.name}
+            type="button"
+            aria-label={`View ${event.name} itinerary details`}
+            onClick={() => {
+              setShowItinerary(true);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            style={{
+              position: 'absolute',
+              top: event.top,
+              left: '61.5%',
+              width: '22%',
+              height: '3.2%',
+              padding: 0,
+              border: 0,
+              background: 'transparent',
+              cursor: 'pointer',
+            }}
+          />
+        ))}
       </section>
 
-      {/* ─── GAP SPACING ─── */}
-      <div style={{ height: '40px', background: '#f5e6d3' }}></div>
-
       {/* ─── OUR VENUES SECTION ─── */}
-      <section id="travel" style={{ width: '100%', height: 'auto' }}>
+      <section id="travel" style={{ position: 'relative', width: '100%', height: 'auto' }}>
         <img src="/OurVenues.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        
+        {/* Transparent hit areas align with the map buttons baked into the artwork. */}
+        <a
+          href="https://maps.app.goo.gl/xZ8vkBGj8LJy5gjy9"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Green Fusion on Google Maps"
+          style={{ position: 'absolute', top: '25.8%', right: '3%', width: '21%', height: '2.8%' }}
+        />
+        <a
+          href="https://maps.app.goo.gl/nP8uULEpJWJ7Hqj4A"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Rosmarinus on Google Maps"
+          style={{ position: 'absolute', top: '42.8%', right: '3%', width: '21%', height: '2.8%' }}
+        />
+        <a
+          href="https://maps.app.goo.gl/o3NyfACKD7yFngys6"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Euphoria on Google Maps"
+          style={{ position: 'absolute', top: '59.6%', right: '3%', width: '21%', height: '2.8%' }}
+        />
       </section>
 
       {/* ─── RSVP ─── */}
-      <section id="rsvp" className="py-20 px-6 bg-[#faf6f1]">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-4xl text-center text-[#8b3a3a] mb-12 font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
-            RSVP
-          </h2>
+      <section id="rsvp" className="relative min-h-screen py-16 px-4 flex items-center justify-center" style={{
+        backgroundImage: 'url(/RSVP%20Background.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}>
+        <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
+        
+        <div className="relative z-10 w-full max-w-md">
+          {/* ─── RSVP CARD ─── */}
+          <div className="relative rounded-2xl" style={{
+            backgroundImage: 'url(/Form%20Border.png)',
+            backgroundSize: '100% auto',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'top center',
+            backgroundColor: 'transparent',
+            aspectRatio: 'auto',
+            minHeight: '1250px',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            padding: '100px 40px 0px 40px',
+            overflow: 'hidden'
+          }}>
 
-          <div className="bg-white rounded-lg shadow-lg p-10">
+            {/* ─── INNER CONTENT WRAPPER ─── */}
+            <div className="relative z-10 overflow-y-auto pr-2" style={{ maxHeight: '1440px' }}>
+
             {submitted ? (
               <div className="text-center space-y-4 py-8">
-                <div className="w-16 h-16 rounded-full bg-[#f0e6d3] border-2 border-[#c9a96e] flex items-center justify-center mx-auto">
-                  <Check className="w-8 h-8 text-[#c9a96e]" />
+                <div className="w-16 h-16 rounded-full bg-[#f0e6d3] border-2 border-[#d4af37] flex items-center justify-center mx-auto">
+                  <Check className="w-8 h-8 text-[#d4af37]" />
                 </div>
-                <h3 className="text-3xl text-[#8b3a3a] font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  Thank You, {rsvp.name}!
+                <h3 className="text-2xl text-[#8b3a3a] font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  Thank You!
                 </h3>
                 <p className="text-sm text-[#6b5844]">
-                  Your response has been received. We look forward to celebrating with you.
+                  Your RSVP has been received. We look forward to celebrating with you.
                 </p>
-                <button onClick={() => setSubmitted(false)} className="mt-4 text-xs uppercase tracking-widest border border-[#c9a96e] text-[#c9a96e] rounded px-6 py-2 hover:bg-[#f0e6d3] transition-colors">
+                <button onClick={() => setSubmitted(false)} className="mt-4 text-xs uppercase tracking-widest border border-[#d4af37] text-[#d4af37] rounded px-6 py-2 hover:bg-[#f0e6d3] transition-colors">
                   Edit Response
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-medium">Your Name *</label>
-                    <input type="text" required value={rsvp.name} onChange={e => setRsvp({ ...rsvp, name: e.target.value })} placeholder="Full name" className="w-full px-4 py-3 border border-[#d9b59f] rounded bg-[#fdfaf7] focus:outline-none focus:border-[#c9a96e]" />
-                  </div>
-                  <div>
-                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-medium">Phone *</label>
-                    <input type="tel" required value={rsvp.phone} onChange={e => setRsvp({ ...rsvp, phone: e.target.value })} placeholder="+91 98765 43210" className="w-full px-4 py-3 border border-[#d9b59f] rounded bg-[#fdfaf7] focus:outline-none focus:border-[#c9a96e]" />
-                  </div>
-                </div>
+              <>
+                {/* ─── HEADER ─── */}
+                <h2 className="text-5xl text-center text-[#8b3a3a] mb-2 font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  RSVP
+                </h2>
+                <p className="text-xs text-center uppercase tracking-[0.2em] text-[#8b3a3a] font-medium mb-1">We can't wait to celebrate</p>
+                <p className="text-xs text-center uppercase tracking-[0.2em] text-[#8b3a3a] font-medium mb-6">with you!</p>
+                
+                <p className="text-center text-sm text-[#6b5844] mb-8">
+                  Please let us know if you'll be joining us for our wedding celebrations.
+                </p>
 
-                <div>
-                  <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-3 font-medium">Will You Attend?</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[{ id: 'yes', label: 'Joyfully Accept' }, { id: 'no', label: 'Regretfully Decline' }].map(opt => (
-                      <button type="button" key={opt.id} onClick={() => setRsvp({ ...rsvp, attending: opt.id as 'yes' | 'no' })} className={`py-3 rounded text-xs uppercase tracking-wider font-medium border transition-all ${rsvp.attending === opt.id ? 'bg-[#c9a96e] text-white border-[#c9a96e]' : 'bg-white text-[#8b4513] border-[#d9b59f] hover:border-[#c9a96e]'}`}>
-                        {opt.label}
+                {/* ─── FORM ─── */}
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* NAME INPUT */}
+                  <div>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Your Name *</label>
+                    <div className="relative">
+                      <img src="/user.svg" alt="user" className="absolute left-3 top-3.5 w-5 h-5" />
+                      <input 
+                        type="text" 
+                        required 
+                        value={rsvp.name} 
+                        onChange={e => setRsvp({ ...rsvp, name: e.target.value })} 
+                        placeholder="Full name" 
+                        className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] focus:outline-none focus:border-[#8b3a3a] transition-colors placeholder-[#b8860b]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* PHONE INPUT */}
+                  <div>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Phone *</label>
+                    <div className="relative">
+                      <img src="/phone.svg" alt="phone" className="absolute left-3 top-3.5 w-5 h-5" />
+                      <input 
+                        type="tel" 
+                        required 
+                        value={rsvp.phone} 
+                        onChange={e => setRsvp({ ...rsvp, phone: e.target.value })} 
+                        placeholder="+91 98765 43210" 
+                        className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] focus:outline-none focus:border-[#8b3a3a] transition-colors placeholder-[#b8860b]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* ATTENDANCE BUTTONS */}
+                  <div>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-3 font-semibold">Will You Attend?</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button 
+                        type="button" 
+                        onClick={() => setRsvp({ ...rsvp, attending: 'yes' })}
+                        className={`py-3 rounded-lg text-xs uppercase tracking-wider font-semibold border-1 transition-all flex items-center justify-center gap-2 ${
+                          rsvp.attending === 'yes' 
+                            ? 'bg-[#c9a96e] text-white border-[#c9a96e]' 
+                            : 'bg-white text-[#8b4513] border-[#d4af37] hover:border-[#c9a96e]'
+                        }`}
+                      >
+                        ✓ Joyfully Accept
                       </button>
-                    ))}
+                      <button 
+                        type="button" 
+                        onClick={() => setRsvp({ ...rsvp, attending: 'no' })}
+                        className={`py-3 rounded-lg text-xs uppercase tracking-wider font-semibold border-1 transition-all flex items-center justify-center gap-2 ${
+                          rsvp.attending === 'no' 
+                            ? 'bg-[#c9a96e] text-white border-[#c9a96e]' 
+                            : 'bg-white text-[#8b4513] border-[#d4af37] hover:border-[#c9a96e]'
+                        }`}
+                      >
+                        ✗ Regretfully Decline
+                      </button>
+                    </div>
                   </div>
-                </div>
 
-                {rsvp.attending === 'yes' && (
-                  <>
-                    <div>
-                      <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-medium">Number of Guests</label>
-                      <select value={rsvp.guestCount} onChange={e => setRsvp({ ...rsvp, guestCount: e.target.value })} className="w-full px-4 py-3 border border-[#d9b59f] rounded bg-[#fdfaf7] focus:outline-none focus:border-[#c9a96e]">
-                        {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {n===1?'Guest':'Guests'}</option>)}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-3 font-medium">Events You'll Attend</label>
-                      <div className="grid grid-cols-2 gap-3">
-                        {EVENTS.map(ev => (
-                          <label key={ev.id} className="flex items-center gap-2.5 p-3 border border-[#d9b59f] rounded bg-white cursor-pointer hover:border-[#c9a96e] transition-colors">
-                            <input type="checkbox" checked={rsvp.events.includes(ev.id)} onChange={() => toggleEvent(ev.id)} className="accent-[#c9a96e] w-4 h-4" />
-                            <span className="text-xs text-[#8b4513] font-medium">{ev.name}</span>
-                          </label>
-                        ))}
+                  {rsvp.attending === 'yes' && (
+                    <>
+                      {/* NUMBER OF GUESTS */}
+                      <div>
+                        <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Number of Guests</label>
+                        <div className="relative">
+                          <img src="/guest.svg" alt="guest" className="absolute left-3 top-3.5 w-5 h-5" />
+                          <select 
+                            value={rsvp.guestCount} 
+                            onChange={e => setRsvp({ ...rsvp, guestCount: e.target.value })} 
+                            className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] focus:outline-none focus:border-[#8b3a3a] transition-colors appearance-none cursor-pointer"
+                          >
+                            {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {n===1?'Guest':'Guests'}</option>)}
+                          </select>
+                          <span className="absolute right-3 top-3.5 pointer-events-none text-[#d4af37]">▼</span>
+                        </div>
                       </div>
+
+                      {/* EVENTS CHECKBOXES */}
+                      <div>
+                        <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-3 font-semibold">Events You'll Attend</label>
+                        <div className="grid grid-cols-2 gap-3">
+                          {EVENTS.map((ev, idx) => {
+                            const iconFiles = ['mehandi.svg', 'haldi.svg', 'sangeet.svg', 'wedding.svg'];
+                            return (
+                              <label key={ev.id} className="flex items-center gap-2 p-3 border-1 border-[#d4af37] rounded-lg bg-white cursor-pointer hover:border-[#c9a96e] transition-colors">
+                                <input 
+                                  type="checkbox" 
+                                  checked={rsvp.events.includes(ev.id)} 
+                                  onChange={() => toggleEvent(ev.id)} 
+                                  className="accent-[#c9a96e] w-4 h-4" 
+                                />
+                                <img src={`/${iconFiles[idx]}`} alt={ev.name} className="w-5 h-5" />
+                                <span className="text-xs text-[#8b4513] font-medium">{ev.name}</span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* WISHES TEXTAREA */}
+                  <div>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Wishes for the Couple</label>
+                    <div className="relative">
+                      <img src="/heart.svg" alt="heart" className="absolute left-3 top-3 w-5 h-5" />
+                      <textarea 
+                        rows={3} 
+                        value={rsvp.message} 
+                        onChange={e => setRsvp({ ...rsvp, message: e.target.value })} 
+                        placeholder="Share your warmest wishes…" 
+                        className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] resize-none focus:outline-none focus:border-[#8b3a3a] transition-colors placeholder-[#b8860b]"
+                      />
                     </div>
-                  </>
-                )}
+                  </div>
 
-                <div>
-                  <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-medium">Wishes for the Couple</label>
-                  <textarea rows={3} value={rsvp.message} onChange={e => setRsvp({ ...rsvp, message: e.target.value })} placeholder="Share your warmest wishes…" className="w-full px-4 py-3 border border-[#d9b59f] rounded bg-[#fdfaf7] resize-none focus:outline-none focus:border-[#c9a96e]" />
-                </div>
-
-                <button type="submit" className="w-full py-3 bg-[#c9a96e] text-white text-xs uppercase tracking-widest font-medium rounded hover:bg-[#b8924a] transition-colors flex items-center justify-center gap-2">
-                  <Send className="w-4 h-4" /> Confirm RSVP
-                </button>
-              </form>
+                  {/* SUBMIT BUTTON */}
+                  <button 
+                    type="submit" 
+                    className="w-full py-4 bg-gradient-to-r from-[#b8956a] to-[#a67c52] text-white text-xs uppercase tracking-[0.2em] font-semibold rounded-lg hover:from-[#a67c52] hover:to-[#8b6a47] transition-all shadow-lg flex items-center justify-center gap-2 mt-4"
+                  >
+                    <img src="/plane.svg" alt="plane" className="w-4 h-4" />
+                    Confirm RSVP
+                  </button>
+                </form>
+              </>
             )}
+            </div>
           </div>
         </div>
       </section>
+      </main>
+      )}
 
       {/* ─── FOOTER ─── */}
-      <footer className="bg-gradient-to-b from-[#f0dcc8] to-[#e8d0ba] text-[#8b3a3a] py-16 text-center border-t border-[#d4af37]">
-        <div className="max-w-md mx-auto space-y-4">
-          <Heart className="w-6 h-6 text-[#d4af37] fill-[#d4af37] mx-auto" />
-          <h3 className="text-3xl text-[#8b3a3a] font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Aulick and Rishi</h3>
-          <p className="text-xs uppercase tracking-[0.15em] text-[#8b3a3a] font-medium">3rd December 2026 · Surat</p>
+      <footer style={{
+        backgroundImage: 'url(/Footer.png)',
+        backgroundSize: '100% auto',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundColor: 'transparent',
+        minHeight: '230px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        paddingTop: '32px',
+        paddingBottom: '12px'
+      }} className="text-[#8b3a3a] text-center border-t border-[#d4af37]">
+        <div className="max-w-md mx-auto space-y-2">
+          <Heart className="w-4 h-4 text-[#d4af37] fill-[#d4af37] mx-auto" />
+          <h3 className="text-2xl text-[#8b3a3a] font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Aulick & Rishi</h3>
+          <p className="text-xs uppercase tracking-[0.12em] text-[#8b3a3a] font-medium">1st - 3rd December 2026 · Surat</p>
           <p className="text-xs text-[#8b3a3a] opacity-70">Made with love for our family &amp; friends</p>
         </div>
       </footer>
