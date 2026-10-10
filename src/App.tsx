@@ -93,6 +93,20 @@ export default function App() {
     }
   };
 
+  const returnToHome = () => {
+    setShowVenues(false);
+    setShowItinerary(false);
+    setShowExploreSurat(false);
+    setShowTrip(false);
+    setSidebarOpen(false);
+    setPendingSection('home');
+  };
+
+  const handleHomeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    returnToHome();
+  };
+
   const openPlanPage = (page: 'venues' | 'itinerary' | 'exploreSurat' | 'trip') => {
     setShowVenues(page === 'venues');
     setShowItinerary(page === 'itinerary');
@@ -345,7 +359,7 @@ export default function App() {
           position: relative;
           width: 100%;
           aspect-ratio: 887 / 1580;
-          margin-top: 70px;
+          margin-top: 0;
           overflow: hidden;
           background: #fbe1be;
         }
@@ -382,12 +396,22 @@ export default function App() {
       {/* ─── NAVBAR ─── */}
       <nav className="navbar">
         <div className="navbar-left">
-          <div className="navbar-menu" onClick={() => setSidebarOpen(!sidebarOpen)}>☰</div>
+          <button
+            type="button"
+            className="navbar-menu"
+            aria-label="Open navigation menu"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            style={{ border: 0, padding: 0, background: 'transparent' }}
+          >
+            ☰
+          </button>
           <div className="navbar-divider"></div>
         </div>
 
         <div className="navbar-center">
-          <img src="/Swastik.png" alt="Swastik" className="navbar-swastik" />
+          <a href="#home" aria-label="Go to home page" onClick={handleHomeNavigation}>
+            <img src="/Swastik.png" alt="Swastik" className="navbar-swastik" />
+          </a>
         </div>
 
         <div className="navbar-right">
@@ -429,7 +453,7 @@ export default function App() {
           />
         </main>
       ) : (
-      <main id="home">
+      <main id="home" style={{ paddingTop: '70px' }}>
       {/* ─── HERO SECTION ─── */}
       <section className="hero">
         {/* Layer 0: Architecture Background */}
