@@ -68,6 +68,39 @@ export default function App() {
   const [showItinerary, setShowItinerary] = useState(false);
   const [showExploreSurat, setShowExploreSurat] = useState(false);
   const [showTrip, setShowTrip] = useState(false);
+  const [showVenues, setShowVenues] = useState(false);
+  const [pendingSection, setPendingSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!showItinerary && !showExploreSurat && !showTrip && !showVenues && pendingSection) {
+      document.getElementById(pendingSection)?.scrollIntoView({ behavior: 'smooth' });
+      setPendingSection(null);
+    }
+  }, [showItinerary, showExploreSurat, showTrip, showVenues, pendingSection]);
+
+  const handleSectionNavigation = (sectionId: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    setSidebarOpen(false);
+
+    if (sectionId === 'rsvp') return;
+
+    if (showItinerary || showExploreSurat || showTrip || showVenues) {
+      event.preventDefault();
+      setPendingSection(sectionId);
+      setShowItinerary(false);
+      setShowExploreSurat(false);
+      setShowTrip(false);
+      setShowVenues(false);
+    }
+  };
+
+  const openPlanPage = (page: 'venues' | 'itinerary' | 'exploreSurat' | 'trip') => {
+    setShowVenues(page === 'venues');
+    setShowItinerary(page === 'itinerary');
+    setShowExploreSurat(page === 'exploreSurat');
+    setShowTrip(page === 'trip');
+    setPendingSection(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const [rsvp, setRsvp] = useState({
     name: '', phone: '',
@@ -115,7 +148,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5e6d3]" style={{
+    <div className="min-h-screen bg-[#fbe1be]" style={{
       maxWidth: '600px',
       margin: '0 auto',
       width: '100%'
@@ -128,7 +161,7 @@ export default function App() {
           top: 70px;
           width: 280px;
           height: calc(100vh - 70px);
-          background: linear-gradient(to bottom, #f5e6d3 0%, #f0dcc8 100%);
+          background: linear-gradient(to bottom, #fbe1be 0%, #f0dcc8 100%);
           box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
           transform: translateX(-100%);
           transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -192,7 +225,7 @@ export default function App() {
           left: 50%;
           transform: translateX(-50%);
           z-index: 100;
-          background: linear-gradient(to bottom, #f5e6d3 0%, #f0dcc8 100%);
+          background: linear-gradient(to bottom, #fbe1be 0%, #f0dcc8 100%);
           padding: 0 1rem;
           display: flex;
           justify-content: space-between;
@@ -314,7 +347,7 @@ export default function App() {
           aspect-ratio: 887 / 1580;
           margin-top: 70px;
           overflow: hidden;
-          background: #f5e6d3;
+          background: #fbe1be;
         }
 
         /* ─── LAYER 0: ARCHITECTURE BACKGROUND ─── */
@@ -337,13 +370,12 @@ export default function App() {
       {/* ─── SIDEBAR ─── */}
       <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <nav className="sidebar-menu">
-          <a href="#home" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Home</a>
-          <a href="#story" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Our Story</a>
-          <a href="#events" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Events</a>
-          <a href="#travel" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>Travel & Stay</a>
-          <a href="#explore-surat" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(false); setShowExploreSurat(true); setShowTrip(false); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Explore Surat</a>
-          <a href="#trip" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(false); setShowExploreSurat(false); setShowTrip(true); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Trip</a>
-          <a href="#rsvp" className="sidebar-item" onClick={() => { setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setSidebarOpen(false); }}>RSVP</a>
+          <a href="#home" className="sidebar-item" onClick={handleSectionNavigation('home')}>Home</a>
+          <a href="#itinerary" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(true); setShowExploreSurat(false); setShowTrip(false); setShowVenues(false); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Detailed Itinerary</a>
+          <a href="#our-venues" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(false); setShowExploreSurat(false); setShowTrip(false); setShowVenues(true); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Our Venues</a>
+          <a href="#explore-surat" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(false); setShowExploreSurat(true); setShowTrip(false); setShowVenues(false); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Explore Surat</a>
+          <a href="#trip" className="sidebar-item" onClick={(event) => { event.preventDefault(); setShowItinerary(false); setShowExploreSurat(false); setShowTrip(true); setShowVenues(false); setSidebarOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Trip</a>
+          <a href="#rsvp" className="sidebar-item" onClick={handleSectionNavigation('rsvp')}>RSVP</a>
         </nav>
       </div>
 
@@ -359,11 +391,20 @@ export default function App() {
         </div>
 
         <div className="navbar-right">
-          <a href="#rsvp" className="navbar-rsvp">RSVP</a>
+          <a href="#rsvp" className="navbar-rsvp" onClick={handleSectionNavigation('rsvp')}>RSVP</a>
         </div>
       </nav>
 
-      {showTrip ? (
+      {showVenues ? (
+        <main id="our-venues" style={{ marginTop: '70px' }}>
+          <section style={{ position: 'relative', width: '100%', height: 'auto' }}>
+            <img src="/OurVenues.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <a href="https://maps.app.goo.gl/xZ8vkBGj8LJy5gjy9" target="_blank" rel="noopener noreferrer" aria-label="View Green Fusion on Google Maps" style={{ position: 'absolute', top: '25.8%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/nP8uULEpJWJ7Hqj4A" target="_blank" rel="noopener noreferrer" aria-label="View Rosmarinus on Google Maps" style={{ position: 'absolute', top: '42.8%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/o3NyfACKD7yFngys6" target="_blank" rel="noopener noreferrer" aria-label="View Euphoria on Google Maps" style={{ position: 'absolute', top: '59.6%', right: '3%', width: '21%', height: '2.8%' }} />
+          </section>
+        </main>
+      ) : showTrip ? (
         <main style={{ marginTop: '70px' }}>
           <img
             src="/Trip.png"
@@ -400,32 +441,33 @@ export default function App() {
         <img src="/Section2.png" alt="Section 2" style={{ width: '100%', height: 'auto', display: 'block' }} />
       </section>
 
-      {/* ─── GAP SPACING ─── */}
-      <div style={{ height: '40px', background: '#f5e6d3' }}></div>
+      </main>
+      )}
 
-      {/* ─── FESTIVITES SECTION ─── */}
-      <section id="events" style={{ position: 'relative', width: '100%', height: 'auto' }}>
-        <img src="/Festivities.png" alt="Festivities" style={{ width: '100%', height: 'auto', display: 'block' }} />
+      {!showVenues && !showTrip && !showExploreSurat && !showItinerary && (
+      <section style={{ position: 'relative', width: '100%', height: 'auto' }}>
+        <img
+          src="/PlanDays.png"
+          alt="Wedding plans by day"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
         {[
-          { name: 'Mehandi', top: '25.7%' },
-          { name: 'Haldi', top: '46.6%' },
-          { name: 'Sangeet', top: '66.1%' },
-          { name: 'Varmala and Pheras', top: '85.5%' },
-        ].map(event => (
+          { label: 'View venues', page: 'venues' as const, left: '7.8%', width: '16.5%' },
+          { label: 'View itinerary', page: 'itinerary' as const, left: '30.3%', width: '17%' },
+          { label: 'Explore Surat', page: 'exploreSurat' as const, left: '52.5%', width: '17%' },
+          { label: 'Explore trips', page: 'trip' as const, left: '75.2%', width: '17%' },
+        ].map(button => (
           <button
-            key={event.name}
+            key={button.page}
             type="button"
-            aria-label={`View ${event.name} itinerary details`}
-            onClick={() => {
-              setShowItinerary(true);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            aria-label={button.label}
+            onClick={() => openPlanPage(button.page)}
             style={{
               position: 'absolute',
-              top: event.top,
-              left: '61.5%',
-              width: '22%',
-              height: '3.2%',
+              top: '67.2%',
+              left: button.left,
+              width: button.width,
+              height: '5.4%',
               padding: 0,
               border: 0,
               background: 'transparent',
@@ -434,37 +476,10 @@ export default function App() {
           />
         ))}
       </section>
-
-      {/* ─── OUR VENUES SECTION ─── */}
-      <section id="travel" style={{ position: 'relative', width: '100%', height: 'auto' }}>
-        <img src="/OurVenues.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
-        
-        {/* Transparent hit areas align with the map buttons baked into the artwork. */}
-        <a
-          href="https://maps.app.goo.gl/xZ8vkBGj8LJy5gjy9"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View Green Fusion on Google Maps"
-          style={{ position: 'absolute', top: '25.8%', right: '3%', width: '21%', height: '2.8%' }}
-        />
-        <a
-          href="https://maps.app.goo.gl/nP8uULEpJWJ7Hqj4A"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View Rosmarinus on Google Maps"
-          style={{ position: 'absolute', top: '42.8%', right: '3%', width: '21%', height: '2.8%' }}
-        />
-        <a
-          href="https://maps.app.goo.gl/o3NyfACKD7yFngys6"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View Euphoria on Google Maps"
-          style={{ position: 'absolute', top: '59.6%', right: '3%', width: '21%', height: '2.8%' }}
-        />
-      </section>
+      )}
 
       {/* ─── RSVP ─── */}
-      <section id="rsvp" className="relative min-h-screen py-16 px-4 flex items-center justify-center" style={{
+      <section id="rsvp" className="relative py-4 px-4 flex items-center justify-center" style={{
         backgroundImage: 'url(/RSVP%20Background.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -472,25 +487,25 @@ export default function App() {
       }}>
         <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
         
-        <div className="relative z-10 w-full max-w-md">
+        <div className="relative z-10 w-full max-w-xl">
           {/* ─── RSVP CARD ─── */}
           <div className="relative rounded-2xl" style={{
-            backgroundImage: 'url(/Form%20Border.png)',
-            backgroundSize: '100% auto',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'top center',
+            borderStyle: 'solid',
+            borderWidth: 'clamp(84px, 22vw, 130px) clamp(16px, 4vw, 24px) clamp(96px, 25vw, 150px)',
+            borderImageSource: 'url(/Form%20Border%20Frame.png)',
+            borderImageSlice: '190 30 230 30 fill',
+            borderImageRepeat: 'stretch',
             backgroundColor: 'transparent',
             aspectRatio: 'auto',
-            minHeight: '1250px',
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
-            padding: '100px 40px 0px 40px',
+            padding: '24px 10% 28px',
             overflow: 'hidden'
           }}>
 
             {/* ─── INNER CONTENT WRAPPER ─── */}
-            <div className="relative z-10 overflow-y-auto pr-2" style={{ maxHeight: '1440px' }}>
+            <div className="relative z-10">
 
             {submitted ? (
               <div className="text-center space-y-4 py-8">
@@ -655,8 +670,6 @@ export default function App() {
           </div>
         </div>
       </section>
-      </main>
-      )}
 
       {/* ─── FOOTER ─── */}
       <footer style={{
