@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, MapPin, Clock, Send, Check } from 'lucide-react';
+import { Heart, Calendar, MapPin, Clock, Send, Check, Instagram, MessageCircle, Phone } from 'lucide-react';
 
 // ─── Event Data ───────────────────────────────────────────────────────────────
 const EVENTS = [
@@ -423,9 +423,9 @@ export default function App() {
         <main id="our-venues" style={{ marginTop: '70px' }}>
           <section style={{ position: 'relative', width: '100%', height: 'auto' }}>
             <img src="/OurVenues.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            <a href="https://maps.app.goo.gl/xZ8vkBGj8LJy5gjy9" target="_blank" rel="noopener noreferrer" aria-label="View Green Fusion on Google Maps" style={{ position: 'absolute', top: '25.8%', right: '3%', width: '21%', height: '2.8%' }} />
-            <a href="https://maps.app.goo.gl/nP8uULEpJWJ7Hqj4A" target="_blank" rel="noopener noreferrer" aria-label="View Rosmarinus on Google Maps" style={{ position: 'absolute', top: '42.8%', right: '3%', width: '21%', height: '2.8%' }} />
-            <a href="https://maps.app.goo.gl/o3NyfACKD7yFngys6" target="_blank" rel="noopener noreferrer" aria-label="View Euphoria on Google Maps" style={{ position: 'absolute', top: '59.6%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/zu1CKdQhbokfSfAZ6" target="_blank" rel="noopener noreferrer" aria-label="View Green Fusion on Google Maps" style={{ position: 'absolute', top: '25.8%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/41KQhJY5sb4aox1DA" target="_blank" rel="noopener noreferrer" aria-label="View Rosmarinus on Google Maps" style={{ position: 'absolute', top: '42.8%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/DpYkb5gSdkFi4kTSA" target="_blank" rel="noopener noreferrer" aria-label="View Euphoria on Google Maps" style={{ position: 'absolute', top: '59.6%', right: '3%', width: '21%', height: '2.8%' }} />
           </section>
         </main>
       ) : showTrip ? (
@@ -445,11 +445,46 @@ export default function App() {
           />
         </main>
       ) : showItinerary ? (
-        <main style={{ marginTop: '70px' }}>
+        <main style={{ position: 'relative', marginTop: '70px' }}>
           <img
             src="/Detailed%20Itinerary.png"
             alt="Detailed wedding itinerary"
             style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+          <a
+            href="https://www.instagram.com/harshpatel.music/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Harsh Patel on Instagram"
+            style={{ position: 'absolute', top: '31.6%', left: '29%', width: '23%', height: '1.6%' }}
+          />
+          <a
+            href="https://www.instagram.com/mirchirjaditya/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit RJ Aditya Hore on Instagram from the Haldi section"
+            style={{ position: 'absolute', top: '53.9%', left: '29%', width: '23%', height: '1.6%' }}
+          />
+          <a
+            href="https://www.instagram.com/mirchirjaditya/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit RJ Aditya Hore on Instagram from the Sangeet section"
+            style={{ position: 'absolute', top: '72%', left: '29%', width: '23%', height: '1.6%' }}
+          />
+          <a
+            href="https://www.instagram.com/devani_live/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Devani Live on Instagram"
+            style={{ position: 'absolute', top: '96.6%', left: '16%', width: '15%', height: '1.8%' }}
+          />
+          <a
+            href="https://www.youtube.com/channel/UCjzfk1mIivp_suKut2XfmOg"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Watch Devani Live on YouTube"
+            style={{ position: 'absolute', top: '96.6%', left: '32.5%', width: '16%', height: '1.8%' }}
           />
         </main>
       ) : (
@@ -461,8 +496,32 @@ export default function App() {
       </section>
 
       {/* ─── SECTION 2 ─── */}
-      <section id="story" style={{ width: '100%', height: 'auto' }}>
-        <img src="/Section2.png" alt="Section 2" style={{ width: '100%', height: 'auto', display: 'block' }} />
+      <section id="story" style={{ position: 'relative', width: '100%', height: 'auto' }}>
+        <img src="/Section2.png" alt="A celebration of love, family, and wedding festivities" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        {[
+          { event: 'Mehendi', top: '49.4%' },
+          { event: 'Haldi', top: '63.3%' },
+          { event: 'Sangeet', top: '75.4%' },
+          { event: 'Wedding', top: '88.7%' },
+        ].map(({ event, top }) => (
+          <button
+            key={event}
+            type="button"
+            aria-label={`View ${event} details`}
+            onClick={() => openPlanPage('itinerary')}
+            style={{
+              position: 'absolute',
+              top,
+              left: '53.5%',
+              width: '22%',
+              height: '1.8%',
+              padding: 0,
+              border: 0,
+              background: 'transparent',
+              cursor: 'pointer',
+            }}
+          />
+        ))}
       </section>
 
       </main>
@@ -507,15 +566,15 @@ export default function App() {
         backgroundImage: 'url(/RSVP%20Background.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
+        backgroundAttachment: 'fixed',
+        backgroundColor: '#FFF4E3'
       }}>
-        <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
-        
-        <div className="relative z-10 w-full max-w-xl">
+        <div className="absolute inset-0 bg-[#F9E3DC]/90 pointer-events-none"></div>
+        <div className="relative z-10 w-full max-w-lg">
           {/* ─── RSVP CARD ─── */}
           <div className="relative rounded-2xl" style={{
             borderStyle: 'solid',
-            borderWidth: 'clamp(84px, 22vw, 130px) clamp(16px, 4vw, 24px) clamp(96px, 25vw, 150px)',
+            borderWidth: 'clamp(76px, 19vw, 112px) clamp(14px, 3.8vw, 22px) clamp(86px, 22vw, 130px)',
             borderImageSource: 'url(/Form%20Border%20Frame.png)',
             borderImageSlice: '190 30 230 30 fill',
             borderImageRepeat: 'stretch',
@@ -524,7 +583,7 @@ export default function App() {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
-            padding: '24px 10% 28px',
+            padding: '16px 8% 20px',
             overflow: 'hidden'
           }}>
 
@@ -533,37 +592,37 @@ export default function App() {
 
             {submitted ? (
               <div className="text-center space-y-4 py-8">
-                <div className="w-16 h-16 rounded-full bg-[#f0e6d3] border-2 border-[#d4af37] flex items-center justify-center mx-auto">
-                  <Check className="w-8 h-8 text-[#d4af37]" />
+                <div className="w-16 h-16 rounded-full bg-[#f0e6d3] border-2 border-[#D9A441] flex items-center justify-center mx-auto">
+                  <Check className="w-8 h-8 text-[#D9A441]" />
                 </div>
-                <h3 className="text-2xl text-[#8b3a3a] font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h3 className="text-2xl text-[#8F2438] font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Thank You!
                 </h3>
-                <p className="text-sm text-[#6b5844]">
+                <p className="text-sm text-[#8F2438]">
                   Your RSVP has been received. We look forward to celebrating with you.
                 </p>
-                <button onClick={() => setSubmitted(false)} className="mt-4 text-xs uppercase tracking-widest border border-[#d4af37] text-[#d4af37] rounded px-6 py-2 hover:bg-[#f0e6d3] transition-colors">
+                <button onClick={() => setSubmitted(false)} className="mt-4 text-xs uppercase tracking-widest border border-[#D9A441] text-[#D9A441] rounded px-6 py-2 hover:bg-[#f0e6d3] transition-colors">
                   Edit Response
                 </button>
               </div>
             ) : (
               <>
                 {/* ─── HEADER ─── */}
-                <h2 className="text-5xl text-center text-[#8b3a3a] mb-2 font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h2 className="text-4xl text-center text-[#8F2438] mb-1 font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
                   RSVP
                 </h2>
-                <p className="text-xs text-center uppercase tracking-[0.2em] text-[#8b3a3a] font-medium mb-1">We can't wait to celebrate</p>
-                <p className="text-xs text-center uppercase tracking-[0.2em] text-[#8b3a3a] font-medium mb-6">with you!</p>
+                <p className="text-[11px] text-center uppercase tracking-[0.2em] text-[#8F2438] font-medium mb-0.5">We can't wait to celebrate</p>
+                <p className="text-[11px] text-center uppercase tracking-[0.2em] text-[#8F2438] font-medium mb-4">with you!</p>
                 
-                <p className="text-center text-sm text-[#6b5844] mb-8">
+                <p className="text-center text-sm text-[#8F2438]/80 mb-5">
                   Please let us know if you'll be joining us for our wedding celebrations.
                 </p>
 
                 {/* ─── FORM ─── */}
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   {/* NAME INPUT */}
                   <div>
-                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Your Name *</label>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Your Name *</label>
                     <div className="relative">
                       <img src="/user.svg" alt="user" className="absolute left-3 top-3.5 w-5 h-5" />
                       <input 
@@ -572,14 +631,14 @@ export default function App() {
                         value={rsvp.name} 
                         onChange={e => setRsvp({ ...rsvp, name: e.target.value })} 
                         placeholder="Full name" 
-                        className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] focus:outline-none focus:border-[#8b3a3a] transition-colors placeholder-[#b8860b]"
+                        className="w-full pl-10 pr-4 py-2 border border-[#D9A441] rounded-lg bg-[#FFF4E3] text-[#8F2438] focus:outline-none focus:border-[#8F2438] transition-colors placeholder-[#A66A50]"
                       />
                     </div>
                   </div>
 
                   {/* PHONE INPUT */}
                   <div>
-                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Phone *</label>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Phone *</label>
                     <div className="relative">
                       <img src="/phone.svg" alt="phone" className="absolute left-3 top-3.5 w-5 h-5" />
                       <input 
@@ -588,22 +647,22 @@ export default function App() {
                         value={rsvp.phone} 
                         onChange={e => setRsvp({ ...rsvp, phone: e.target.value })} 
                         placeholder="+91 98765 43210" 
-                        className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] focus:outline-none focus:border-[#8b3a3a] transition-colors placeholder-[#b8860b]"
+                        className="w-full pl-10 pr-4 py-2 border border-[#D9A441] rounded-lg bg-[#FFF4E3] text-[#8F2438] focus:outline-none focus:border-[#8F2438] transition-colors placeholder-[#A66A50]"
                       />
                     </div>
                   </div>
 
                   {/* ATTENDANCE BUTTONS */}
                   <div>
-                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-3 font-semibold">Will You Attend?</label>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-3 font-semibold">Will You Attend?</label>
                     <div className="grid grid-cols-2 gap-3">
                       <button 
                         type="button" 
                         onClick={() => setRsvp({ ...rsvp, attending: 'yes' })}
-                        className={`py-3 rounded-lg text-xs uppercase tracking-wider font-semibold border-1 transition-all flex items-center justify-center gap-2 ${
+                        className={`py-2.5 rounded-lg text-[10px] uppercase tracking-wider font-semibold border-1 transition-all flex items-center justify-center gap-2 ${
                           rsvp.attending === 'yes' 
-                            ? 'bg-[#c9a96e] text-white border-[#c9a96e]' 
-                            : 'bg-white text-[#8b4513] border-[#d4af37] hover:border-[#c9a96e]'
+                            ? 'bg-[#E88D91] text-white border-[#E88D91]' 
+                            : 'bg-white text-[#8F2438] border-[#D9A441] hover:border-[#E88D91]'
                         }`}
                       >
                         ✓ Joyfully Accept
@@ -611,10 +670,10 @@ export default function App() {
                       <button 
                         type="button" 
                         onClick={() => setRsvp({ ...rsvp, attending: 'no' })}
-                        className={`py-3 rounded-lg text-xs uppercase tracking-wider font-semibold border-1 transition-all flex items-center justify-center gap-2 ${
+                        className={`py-2.5 rounded-lg text-[10px] uppercase tracking-wider font-semibold border-1 transition-all flex items-center justify-center gap-2 ${
                           rsvp.attending === 'no' 
-                            ? 'bg-[#c9a96e] text-white border-[#c9a96e]' 
-                            : 'bg-white text-[#8b4513] border-[#d4af37] hover:border-[#c9a96e]'
+                            ? 'bg-[#E88D91] text-white border-[#E88D91]' 
+                            : 'bg-white text-[#8F2438] border-[#D9A441] hover:border-[#E88D91]'
                         }`}
                       >
                         ✗ Regretfully Decline
@@ -626,36 +685,36 @@ export default function App() {
                     <>
                       {/* NUMBER OF GUESTS */}
                       <div>
-                        <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Number of Guests</label>
+                        <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Number of Guests</label>
                         <div className="relative">
                           <img src="/guest.svg" alt="guest" className="absolute left-3 top-3.5 w-5 h-5" />
                           <select 
                             value={rsvp.guestCount} 
                             onChange={e => setRsvp({ ...rsvp, guestCount: e.target.value })} 
-                            className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] focus:outline-none focus:border-[#8b3a3a] transition-colors appearance-none cursor-pointer"
+                            className="w-full pl-10 pr-4 py-2 border border-[#D9A441] rounded-lg bg-[#FFF4E3] text-[#8F2438] focus:outline-none focus:border-[#8F2438] transition-colors appearance-none cursor-pointer"
                           >
                             {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {n===1?'Guest':'Guests'}</option>)}
                           </select>
-                          <span className="absolute right-3 top-3.5 pointer-events-none text-[#d4af37]">▼</span>
+                          <span className="absolute right-3 top-3.5 pointer-events-none text-[#D9A441]">▼</span>
                         </div>
                       </div>
 
                       {/* EVENTS CHECKBOXES */}
                       <div>
-                        <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-3 font-semibold">Events You'll Attend</label>
+                        <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-3 font-semibold">Events You'll Attend</label>
                         <div className="grid grid-cols-2 gap-3">
                           {EVENTS.map((ev, idx) => {
                             const iconFiles = ['mehandi.svg', 'haldi.svg', 'sangeet.svg', 'wedding.svg'];
                             return (
-                              <label key={ev.id} className="flex items-center gap-2 p-3 border-1 border-[#d4af37] rounded-lg bg-white cursor-pointer hover:border-[#c9a96e] transition-colors">
+                              <label key={ev.id} className="flex items-center gap-2 p-2.5 border border-[#D9A441] rounded-lg bg-[#FFF4E3] cursor-pointer hover:border-[#E88D91] transition-colors">
                                 <input 
                                   type="checkbox" 
                                   checked={rsvp.events.includes(ev.id)} 
                                   onChange={() => toggleEvent(ev.id)} 
-                                  className="accent-[#c9a96e] w-4 h-4" 
+                                  className="accent-[#E88D91] w-4 h-4" 
                                 />
                                 <img src={`/${iconFiles[idx]}`} alt={ev.name} className="w-5 h-5" />
-                                <span className="text-xs text-[#8b4513] font-medium">{ev.name}</span>
+                                <span className="text-xs text-[#8F2438] font-medium">{ev.name}</span>
                               </label>
                             );
                           })}
@@ -666,15 +725,15 @@ export default function App() {
 
                   {/* WISHES TEXTAREA */}
                   <div>
-                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8b4513] mb-2 font-semibold">Wishes for the Couple</label>
+                    <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Wishes, Requests &amp; Ideas</label>
                     <div className="relative">
                       <img src="/heart.svg" alt="heart" className="absolute left-3 top-3 w-5 h-5" />
                       <textarea 
                         rows={3} 
                         value={rsvp.message} 
                         onChange={e => setRsvp({ ...rsvp, message: e.target.value })} 
-                        placeholder="Share your warmest wishes…" 
-                        className="w-full pl-10 pr-4 py-2 border-1 border-[#d4af37] rounded-lg bg-[#fdfaf7] text-[#8b4513] resize-none focus:outline-none focus:border-[#8b3a3a] transition-colors placeholder-[#b8860b]"
+                        placeholder="A song you'd love to hear, a special moment to plan, or a fun idea for the celebrations." 
+                        className="w-full pl-10 pr-4 py-2 border border-[#D9A441] rounded-lg bg-[#FFF4E3] text-[#8F2438] resize-none focus:outline-none focus:border-[#8F2438] transition-colors placeholder:text-xs placeholder-[#A66A50]"
                       />
                     </div>
                   </div>
@@ -682,7 +741,7 @@ export default function App() {
                   {/* SUBMIT BUTTON */}
                   <button 
                     type="submit" 
-                    className="w-full py-4 bg-gradient-to-r from-[#b8956a] to-[#a67c52] text-white text-xs uppercase tracking-[0.2em] font-semibold rounded-lg hover:from-[#a67c52] hover:to-[#8b6a47] transition-all shadow-lg flex items-center justify-center gap-2 mt-4"
+                    className="w-full py-4 bg-[#8F2438] text-white text-xs uppercase tracking-[0.2em] font-semibold rounded-lg hover:bg-[#761B2C] transition-all shadow-lg flex items-center justify-center gap-2 mt-4"
                   >
                     <img src="/plane.svg" alt="plane" className="w-4 h-4" />
                     Confirm RSVP
@@ -714,6 +773,16 @@ export default function App() {
           <h3 className="text-2xl text-[#8b3a3a] font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>Aulick & Rishi</h3>
           <p className="text-xs uppercase tracking-[0.12em] text-[#8b3a3a] font-medium">1st - 3rd December 2026 · Surat</p>
           <p className="text-xs text-[#8b3a3a] opacity-70">Made with love for our family &amp; friends</p>
+          <div className="flex items-center justify-center gap-5 pt-2 text-[#8F2438]" aria-label="Social media and contact icons">
+            <Instagram className="w-4 h-4" aria-label="Instagram" />
+            <span className="relative inline-flex w-4 h-4 items-center justify-center" aria-label="WhatsApp">
+              <MessageCircle className="absolute inset-0 w-4 h-4" />
+              <span className="text-[8px] font-semibold leading-none">☎</span>
+            </span>
+            <a href="tel:+917349081610" aria-label="Call +91 73490 81610" className="inline-flex text-inherit hover:opacity-70 transition-opacity">
+              <Phone className="w-4 h-4" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </footer>
     </div>
