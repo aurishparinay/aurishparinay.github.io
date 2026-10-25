@@ -422,7 +422,7 @@ export default function App() {
       {showVenues ? (
         <main id="our-venues" style={{ marginTop: '70px' }}>
           <section style={{ position: 'relative', width: '100%', height: 'auto' }}>
-            <img src="/OurVenues.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <img src="/OurVenues-Updated.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
             <a href="https://maps.app.goo.gl/xZ8vkBGj8LJy5gjy9" target="_blank" rel="noopener noreferrer" aria-label="View Green Fusion on Google Maps" style={{ position: 'absolute', top: '33.5%', right: '3%', width: '21%', height: '2.8%' }} />
             <a href="https://maps.app.goo.gl/nP8uULEpJWJ7Hqj4A" target="_blank" rel="noopener noreferrer" aria-label="View Rosmarinus on Google Maps" style={{ position: 'absolute', top: '43.6%', right: '3%', width: '21%', height: '2.8%' }} />
             <a href="https://maps.app.goo.gl/o3NyfACKD7yFngys6" target="_blank" rel="noopener noreferrer" aria-label="View Euphoria on Google Maps" style={{ position: 'absolute', top: '53.8%', right: '3%', width: '21%', height: '2.8%' }} />
