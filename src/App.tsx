@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, MapPin, Clock, Send, Check, Instagram, MessageCircle, Phone } from 'lucide-react';
+import { Heart, Calendar, MapPin, Clock, Send, Check, Phone } from 'lucide-react';
 
 // ─── Event Data ───────────────────────────────────────────────────────────────
 const EVENTS = [
@@ -423,9 +423,9 @@ export default function App() {
         <main id="our-venues" style={{ marginTop: '70px' }}>
           <section style={{ position: 'relative', width: '100%', height: 'auto' }}>
             <img src="/OurVenues.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            <a href="https://maps.app.goo.gl/zu1CKdQhbokfSfAZ6" target="_blank" rel="noopener noreferrer" aria-label="View Green Fusion on Google Maps" style={{ position: 'absolute', top: '25.8%', right: '3%', width: '21%', height: '2.8%' }} />
-            <a href="https://maps.app.goo.gl/41KQhJY5sb4aox1DA" target="_blank" rel="noopener noreferrer" aria-label="View Rosmarinus on Google Maps" style={{ position: 'absolute', top: '42.8%', right: '3%', width: '21%', height: '2.8%' }} />
-            <a href="https://maps.app.goo.gl/DpYkb5gSdkFi4kTSA" target="_blank" rel="noopener noreferrer" aria-label="View Euphoria on Google Maps" style={{ position: 'absolute', top: '59.6%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/xZ8vkBGj8LJy5gjy9" target="_blank" rel="noopener noreferrer" aria-label="View Green Fusion on Google Maps" style={{ position: 'absolute', top: '33.5%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/nP8uULEpJWJ7Hqj4A" target="_blank" rel="noopener noreferrer" aria-label="View Rosmarinus on Google Maps" style={{ position: 'absolute', top: '43.6%', right: '3%', width: '21%', height: '2.8%' }} />
+            <a href="https://maps.app.goo.gl/o3NyfACKD7yFngys6" target="_blank" rel="noopener noreferrer" aria-label="View Euphoria on Google Maps" style={{ position: 'absolute', top: '53.8%', right: '3%', width: '21%', height: '2.8%' }} />
           </section>
         </main>
       ) : showTrip ? (
@@ -456,35 +456,42 @@ export default function App() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit Harsh Patel on Instagram"
-            style={{ position: 'absolute', top: '31.6%', left: '29%', width: '23%', height: '1.6%' }}
+            style={{ position: 'absolute', top: '28.7%', left: '17.5%', width: '15%', height: '1.25%' }}
+          />
+          <a
+            href="https://www.youtube.com/@SingerHarshPatel"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Watch Singer Harsh Patel on YouTube"
+            style={{ position: 'absolute', top: '28.7%', left: '33.5%', width: '15%', height: '1.25%' }}
           />
           <a
             href="https://www.instagram.com/mirchirjaditya/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit RJ Aditya Hore on Instagram from the Haldi section"
-            style={{ position: 'absolute', top: '53.9%', left: '29%', width: '23%', height: '1.6%' }}
+            style={{ position: 'absolute', top: '51.5%', left: '17.5%', width: '14%', height: '1.25%' }}
           />
           <a
             href="https://www.instagram.com/mirchirjaditya/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit RJ Aditya Hore on Instagram from the Sangeet section"
-            style={{ position: 'absolute', top: '72%', left: '29%', width: '23%', height: '1.6%' }}
+            style={{ position: 'absolute', top: '72.2%', left: '17.5%', width: '14%', height: '1.25%' }}
           />
           <a
             href="https://www.instagram.com/devani_live/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit Devani Live on Instagram"
-            style={{ position: 'absolute', top: '96.6%', left: '16%', width: '15%', height: '1.8%' }}
+            style={{ position: 'absolute', top: '94.3%', left: '17.6%', width: '11%', height: '1.5%' }}
           />
           <a
-            href="https://www.youtube.com/channel/UCjzfk1mIivp_suKut2XfmOg"
+            href="https://www.youtube.com/@DevaniLive"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Watch Devani Live on YouTube"
-            style={{ position: 'absolute', top: '96.6%', left: '32.5%', width: '16%', height: '1.8%' }}
+            style={{ position: 'absolute', top: '94.3%', left: '32.4%', width: '13%', height: '1.5%' }}
           />
         </main>
       ) : (
@@ -600,6 +607,18 @@ export default function App() {
                 </h3>
                 <p className="text-sm text-[#8F2438]">
                   Your RSVP has been received. We look forward to celebrating with you.
+                </p>
+                <p className="text-sm text-[#8F2438]">
+                  You can optionally join our wedding{' '}
+                  <a
+                    href="https://chat.whatsapp.com/D1SV2yVQ2v2F9qmbllZ7fH"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 hover:text-[#761B2C]"
+                  >
+                    WhatsApp group
+                  </a>{' '}
+                  for event updates and important announcements!
                 </p>
                 <button onClick={() => setSubmitted(false)} className="mt-4 text-xs uppercase tracking-widest border border-[#D9A441] text-[#D9A441] rounded px-6 py-2 hover:bg-[#f0e6d3] transition-colors">
                   Edit Response
@@ -727,13 +746,12 @@ export default function App() {
                   <div>
                     <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Wishes, Requests &amp; Ideas</label>
                     <div className="relative">
-                      <img src="/heart.svg" alt="heart" className="absolute left-3 top-3 w-5 h-5" />
                       <textarea 
                         rows={3} 
                         value={rsvp.message} 
                         onChange={e => setRsvp({ ...rsvp, message: e.target.value })} 
-                        placeholder="A song you'd love to hear, a special moment to plan, or a fun idea for the celebrations." 
-                        className="w-full pl-10 pr-4 py-2 border border-[#D9A441] rounded-lg bg-[#FFF4E3] text-[#8F2438] resize-none focus:outline-none focus:border-[#8F2438] transition-colors placeholder:text-xs placeholder-[#A66A50]"
+                        placeholder={'💌  Anything we can help with?\nFrom food preferences and makeup artists to dance choreography and fun celebration ideas, tell us what you need!'} 
+                        className="w-full px-4 py-2 border border-[#D9A441] rounded-lg bg-[#FFF4E3] text-[#8F2438] resize-none focus:outline-none focus:border-[#8F2438] transition-colors placeholder:text-xs placeholder-[#A66A50]"
                       />
                     </div>
                   </div>
@@ -774,11 +792,12 @@ export default function App() {
           <p className="text-xs uppercase tracking-[0.12em] text-[#8b3a3a] font-medium">1st - 3rd December 2026 · Surat</p>
           <p className="text-xs text-[#8b3a3a] opacity-70">Made with love for our family &amp; friends</p>
           <div className="flex items-center justify-center gap-5 pt-2 text-[#8F2438]" aria-label="Social media and contact icons">
-            <Instagram className="w-4 h-4" aria-label="Instagram" />
-            <span className="relative inline-flex w-4 h-4 items-center justify-center" aria-label="WhatsApp">
-              <MessageCircle className="absolute inset-0 w-4 h-4" />
-              <span className="text-[8px] font-semibold leading-none">☎</span>
-            </span>
+            <a href="https://wa.me/917349081610" target="_blank" rel="noopener noreferrer" aria-label="Message us on WhatsApp" className="inline-flex text-inherit hover:opacity-70 transition-opacity">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.4-4.7a8.5 8.5 0 1 1 16.1-4Z" />
+                <path d="M9 8.5c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.5.8 1.2 1.5 2.1 1.9.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.7-.1l1.6.8c.3.1.4.3.4.5 0 .3-.2 1.1-.7 1.5-.5.5-1.2.7-2 .6-1-.1-2.3-.7-3.7-1.9-1.1-1-2-2.4-2.2-3.4-.2-.9.1-1.7.6-2.5Z" />
+              </svg>
+            </a>
             <a href="tel:+917349081610" aria-label="Call +91 73490 81610" className="inline-flex text-inherit hover:opacity-70 transition-opacity">
               <Phone className="w-4 h-4" aria-hidden="true" />
             </a>
