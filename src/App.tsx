@@ -411,7 +411,7 @@ export default function App() {
 
         <div className="navbar-center">
           <a href="#home" aria-label="Go to home page" onClick={handleHomeNavigation}>
-            <img src="/Swastik.png" alt="Swastik" className="navbar-swastik" />
+            <img src="/Swastik-450.png" alt="Swastik" className="navbar-swastik" />
           </a>
         </div>
 
@@ -423,7 +423,7 @@ export default function App() {
       {showVenues ? (
         <main id="our-venues" style={{ marginTop: '70px' }}>
           <section style={{ position: 'relative', width: '100%', height: 'auto' }}>
-            <img src="/OurVenues-Updated.png" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <img src="/OurVenues-Updated.jpg" alt="Our Venues" style={{ width: '100%', height: 'auto', display: 'block' }} />
             <a href="https://maps.app.goo.gl/xZ8vkBGj8LJy5gjy9" target="_blank" rel="noopener noreferrer" aria-label="View Green Fusion on Google Maps" style={{ position: 'absolute', top: '33.5%', right: '3%', width: '21%', height: '2.8%' }} />
             <a href="https://maps.app.goo.gl/nP8uULEpJWJ7Hqj4A" target="_blank" rel="noopener noreferrer" aria-label="View Rosmarinus on Google Maps" style={{ position: 'absolute', top: '43.6%', right: '3%', width: '21%', height: '2.8%' }} />
             <a href="https://maps.app.goo.gl/o3NyfACKD7yFngys6" target="_blank" rel="noopener noreferrer" aria-label="View Euphoria on Google Maps" style={{ position: 'absolute', top: '53.8%', right: '3%', width: '21%', height: '2.8%' }} />
@@ -432,7 +432,7 @@ export default function App() {
       ) : showTrip ? (
         <main style={{ marginTop: '70px' }}>
           <img
-            src="/Trip.png"
+            src="/Trip.jpg"
             alt="Trip information"
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
@@ -440,7 +440,7 @@ export default function App() {
       ) : showExploreSurat ? (
         <main style={{ marginTop: '70px' }}>
           <img
-            src="/Explore%20Surat.png"
+            src="/Explore-Surat.jpg"
             alt="Explore Surat local guide"
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
@@ -500,12 +500,12 @@ export default function App() {
       {/* ─── HERO SECTION ─── */}
       <section className="hero">
         {/* Layer 0: Architecture Background */}
-        <img src="/02_euphoria_architecture.png" alt="Architecture" className="hero-architecture" />
+        <img src="/02-euphoria-architecture.jpg" alt="Architecture" className="hero-architecture" fetchPriority="high" />
       </section>
 
       {/* ─── SECTION 2 ─── */}
       <section id="story" style={{ position: 'relative', width: '100%', height: 'auto' }}>
-        <img src="/Section2.png" alt="A celebration of love, family, and wedding festivities" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        <img src="/Section2.jpg" alt="A celebration of love, family, and wedding festivities" loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
         {[
           { event: 'Mehendi', top: '49.4%' },
           { event: 'Haldi', top: '63.3%' },
@@ -538,8 +538,10 @@ export default function App() {
       {!showVenues && !showTrip && !showExploreSurat && !showItinerary && (
       <section style={{ position: 'relative', width: '100%', height: 'auto' }}>
         <img
-          src="/PlanDays.png"
+          src="/PlanDays.jpg"
           alt="Wedding plans by day"
+          loading="lazy"
+          decoding="async"
           style={{ width: '100%', height: 'auto', display: 'block' }}
         />
         {[
@@ -571,7 +573,7 @@ export default function App() {
 
       {/* ─── RSVP ─── */}
       <section id="rsvp" className="relative py-4 px-4 flex items-center justify-center" style={{
-        backgroundImage: 'url(/RSVP%20Background.png)',
+        backgroundImage: 'url(/RSVP-Background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -644,7 +646,7 @@ export default function App() {
                   <div>
                     <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Your Name *</label>
                     <div className="relative">
-                      <img src="/user.svg" alt="user" className="absolute left-3 top-3.5 w-5 h-5" />
+                      <img src="/icon-user.png" alt="user" className="absolute left-3 top-3.5 w-5 h-5" />
                       <input 
                         type="text" 
                         required 
@@ -660,7 +662,7 @@ export default function App() {
                   <div>
                     <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Phone *</label>
                     <div className="relative">
-                      <img src="/phone.svg" alt="phone" className="absolute left-3 top-3.5 w-5 h-5" />
+                      <img src="/icon-phone.png" alt="phone" className="absolute left-3 top-3.5 w-5 h-5" />
                       <input 
                         type="tel" 
                         required 
@@ -707,7 +709,7 @@ export default function App() {
                       <div>
                         <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-2 font-semibold">Number of Guests</label>
                         <div className="relative">
-                          <img src="/guest.svg" alt="guest" className="absolute left-3 top-3.5 w-5 h-5" />
+                          <img src="/icon-guest.png" alt="guest" className="absolute left-3 top-3.5 w-5 h-5" />
                           <select 
                             value={rsvp.guestCount} 
                             onChange={e => setRsvp({ ...rsvp, guestCount: e.target.value })} 
@@ -724,7 +726,7 @@ export default function App() {
                         <label className="block text-xs uppercase tracking-[0.15em] text-[#8F2438] mb-3 font-semibold">Events You'll Attend</label>
                         <div className="grid grid-cols-2 gap-3">
                           {EVENTS.map((ev, idx) => {
-                            const iconFiles = ['mehandi.svg', 'haldi.svg', 'sangeet.svg', 'wedding.svg'];
+                            const iconFiles = ['icon-mehandi.png', 'icon-haldi.png', 'icon-sangeet.png', 'icon-wedding.png'];
                             return (
                               <label key={ev.id} className="flex items-center gap-2 p-2.5 border border-[#D9A441] rounded-lg bg-[#FFF4E3] cursor-pointer hover:border-[#E88D91] transition-colors">
                                 <input 
@@ -762,7 +764,7 @@ export default function App() {
                     type="submit" 
                     className="w-full py-4 bg-[#8F2438] text-white text-xs uppercase tracking-[0.2em] font-semibold rounded-lg hover:bg-[#761B2C] transition-all shadow-lg flex items-center justify-center gap-2 mt-4"
                   >
-                    <img src="/plane.svg" alt="plane" className="w-4 h-4" />
+                    <img src="/icon-plane.png" alt="plane" className="w-4 h-4" />
                     Confirm RSVP
                   </button>
                 </form>
@@ -775,7 +777,7 @@ export default function App() {
 
       {/* ─── FOOTER ─── */}
       <footer style={{
-        backgroundImage: 'url(/Footer.png)',
+        backgroundImage: 'url(/Footer.jpg)',
         backgroundSize: '100% auto',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
