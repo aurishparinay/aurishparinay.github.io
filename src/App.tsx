@@ -470,14 +470,14 @@ export default function App() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit RJ Aditya Hore on Instagram from the Haldi section"
-            style={{ position: 'absolute', top: '51.5%', left: '17.5%', width: '14%', height: '1.25%' }}
+            style={{ position: 'absolute', top: '53%', left: '17%', width: '20%', height: '1.7%', zIndex: 1, background: 'rgba(0, 0, 0, 0)' }}
           />
           <a
             href="https://www.instagram.com/mirchirjaditya/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit RJ Aditya Hore on Instagram from the Sangeet section"
-            style={{ position: 'absolute', top: '72.2%', left: '17.5%', width: '14%', height: '1.25%' }}
+            style={{ position: 'absolute', top: '74%', left: '17%', width: '20%', height: '1.7%', zIndex: 1, background: 'rgba(0, 0, 0, 0)' }}
           />
           <a
             href="https://www.instagram.com/devani_live/"
