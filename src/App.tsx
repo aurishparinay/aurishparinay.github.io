@@ -463,7 +463,7 @@ export default function App() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Watch Singer Harsh Patel on YouTube"
-            style={{ position: 'absolute', top: '28.7%', left: '33.5%', width: '15%', height: '1.25%' }}
+            style={{ position: 'absolute', top: '28.2%', left: '32.5%', width: '22%', height: '2.5%', zIndex: 1, cursor: 'pointer', background: 'rgba(0, 0, 0, 0)' }}
           />
           <a
             href="https://www.instagram.com/mirchirjaditya/"
