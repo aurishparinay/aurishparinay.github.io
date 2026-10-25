@@ -78,6 +78,12 @@ export default function App() {
     }
   }, [showItinerary, showExploreSurat, showTrip, showVenues, pendingSection]);
 
+  useEffect(() => {
+    if (showItinerary || showExploreSurat || showTrip || showVenues) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [showItinerary, showExploreSurat, showTrip, showVenues]);
+
   const handleSectionNavigation = (sectionId: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     setSidebarOpen(false);
 
@@ -113,7 +119,6 @@ export default function App() {
     setShowExploreSurat(page === 'exploreSurat');
     setShowTrip(page === 'trip');
     setPendingSection(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const [rsvp, setRsvp] = useState({
@@ -456,7 +461,7 @@ export default function App() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit Harsh Patel on Instagram"
-            style={{ position: 'absolute', top: '28.7%', left: '17.5%', width: '15%', height: '1.25%' }}
+            style={{ position: 'absolute', top: '28.2%', left: '16.5%', width: '16%', height: '2.5%', zIndex: 1, cursor: 'pointer', background: 'rgba(0, 0, 0, 0)' }}
           />
           <a
             href="https://www.youtube.com/@SingerHarshPatel"
