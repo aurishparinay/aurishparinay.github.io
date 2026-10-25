@@ -450,9 +450,9 @@ export default function App() {
           />
         </main>
       ) : showItinerary ? (
-        <main style={{ position: 'relative', marginTop: '70px', width: '100%', aspectRatio: '3236 / 5760' }}>
+        <main style={{ position: 'relative', marginTop: '70px', width: '100%', aspectRatio: '1600 / 2849' }}>
           <img
-            src="/Detailed%20Itinerary.png"
+            src="/Detailed-Itinerary.jpg"
             alt="Detailed wedding itinerary"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }}
           />
