@@ -11,7 +11,6 @@ const EVENTS = [
     venue: 'Green Fusion',
     city: 'Surat',
     mapUrl: 'https://maps.app.goo.gl/qYU4dNTZMJW1jK9NA',
-    image: '/MehandiNew.png',
   },
   {
     id: 'haldi',
@@ -21,7 +20,6 @@ const EVENTS = [
     venue: 'Green Fusion',
     city: 'Surat',
     mapUrl: 'https://maps.app.goo.gl/qYU4dNTZMJW1jK9NA',
-    image: '/HaldiNew.png',
   },
   {
     id: 'sangeet',
@@ -31,7 +29,6 @@ const EVENTS = [
     venue: 'Rosmarinus Restro',
     city: 'Surat',
     mapUrl: 'https://maps.app.goo.gl/CqVaW7Eth1DmjvWY9',
-    image: '/SangeetNew.png',
   },
   {
     id: 'wedding',
@@ -41,7 +38,6 @@ const EVENTS = [
     venue: 'Euphoria The Fine Dine',
     city: 'Surat',
     mapUrl: 'https://maps.app.goo.gl/WRSubrsDHtAvMCx8A',
-    image: '/ShadiNew.png',
   },
 ];
 
