@@ -445,11 +445,11 @@ export default function App() {
           />
         </main>
       ) : showItinerary ? (
-        <main style={{ position: 'relative', marginTop: '70px' }}>
+        <main style={{ position: 'relative', marginTop: '70px', width: '100%', aspectRatio: '3236 / 5760' }}>
           <img
             src="/Detailed%20Itinerary.png"
             alt="Detailed wedding itinerary"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }}
           />
           <a
             href="https://www.instagram.com/harshpatel.music/"
